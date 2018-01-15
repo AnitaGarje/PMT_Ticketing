@@ -1,6 +1,7 @@
 package com.example.controller;
 
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
@@ -23,6 +24,7 @@ import com.example.model.OtherPay;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
+import com.example.model.User;
 import com.example.model.Wallet;
 import com.example.model.WalletDebit;
 import com.example.service.PassengerService;
@@ -88,12 +90,23 @@ public class PassengerController {
 		modelAndView.setViewName("passengerTrip");
 		return modelAndView;
 	}
+	
+	@RequestMapping(value = "/passengerTrips", method = RequestMethod.GET)
+	public ModelAndView passengerTrips(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
+		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
+		modelAndView.setViewName("passengerTrips");
+		return modelAndView;
+	}
 
 	
 	@RequestMapping(value = "/passengerTrip", method = RequestMethod.POST)
 	public String createNewpassengerTrip(@Valid PassengerTrip passengerTrip, HttpServletRequest request,HttpServletResponse response, BindingResult bindingResult) {
 		System.out.println("In createNewpassengerTrip POST Method");
 		passengerTrip.setPassenger(passengerService.getPhoneFromCookie(request, response));
+		double tikcetCost=passengerService.getTicketCost(passengerTrip.getFromloc(), passengerTrip.getToloc(), passengerTrip.getNots());
+		passengerTrip.setTktamt(tikcetCost);
 		passengerService.savePassengerTrip(passengerTrip);
 		return "redirect:/passengerPay";
 	}
@@ -152,6 +165,10 @@ public class PassengerController {
 		return "redirect:/passenger";
 	}
 
+	
+	
+	
+	
 	@RequestMapping(value = "/wallet", method = RequestMethod.GET)
 	public ModelAndView wallet(HttpServletRequest request, HttpServletResponse response) {
 		
@@ -167,6 +184,20 @@ public class PassengerController {
 	}
 	
 	
+	@RequestMapping(value="/wallet" ,method=RequestMethod.POST)
+    public ModelAndView debit(@Valid Wallet wallet, BindingResult bindingResult,HttpServletRequest request, HttpServletResponse response,RedirectAttributes redir){
+		ModelAndView modelAndView = new ModelAndView();
+		System.out.println("In wallet POST method");
+		wallet.setAvalbal(avlBal+wallet.getAddamt());
+		wallet.setPassenger(passengerService.getPhoneFromCookie(request, response));
+		System.out.println("from passed wallet object avlBal:" +wallet.getAvalbal());
+		passengerService.saveWallet(wallet);
+		modelAndView.addObject("successMessage", "Moey has been added successfully");
+		modelAndView.addObject("wallet", new Wallet());
+		modelAndView.setViewName("wallet");
+		return modelAndView ;
+      }
+	/*Using redirect
 	@RequestMapping(value="/wallet", params="Debit" ,method=RequestMethod.POST)
     public String debit(@Valid Wallet wallet, BindingResult bindingResult,HttpServletRequest request, HttpServletResponse response,RedirectAttributes redir){
 		System.out.println("In wallet POST method");
@@ -177,14 +208,8 @@ public class PassengerController {
 		
         return "redirect:/walletDebit";
 		//return "wallet";
-      }
+      }*/
 	
-	
-	/*@ModelAttribute("modelWallet")
-	public Wallet getWallet(Wallet w) {
-	   
-	      return countries;
-	   }*/
 
 	@RequestMapping(value="/wallet",params="Net",method=RequestMethod.GET)
     public String net(){
@@ -196,7 +221,9 @@ public class PassengerController {
         return "redirect:/otherPay";
     }
 
-	@RequestMapping(value = "/walletDebit", method = RequestMethod.GET)
+	/*Using Wrapper class
+	 * @RequestMapping(value = "/walletDebit", method = RequestMethod.GET)
+	 
 	public ModelAndView debitCard(@ModelAttribute("redrWallet") Wallet wallet,RedirectAttributes redir,HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("In Debit card GET method");
 		System.out.println("Redirect Attributes:"+wallet.getAddamt()+wallet.getAvalbal());
@@ -207,9 +234,11 @@ public class PassengerController {
 		wd.setWallet(wallet);
 		modelAndView.addObject(wd);
 		return modelAndView;
-	}
+	}*/
 	
-	/*@RequestMapping(value = "/debitCard", method = RequestMethod.GET)
+	/*Using redirect
+	 * 
+	 * @RequestMapping(value = "/debitCard", method = RequestMethod.GET)
 	public String debitCard(@ModelAttribute("redrWallet") Wallet wallet,Model map) {
 		
 		System.out.println("In Debit card GET method");
@@ -237,7 +266,9 @@ public class PassengerController {
 		return "debitCard";
 	}*/
 	
-	@RequestMapping(value = "/walletDebit", method = RequestMethod.POST)
+	/*
+	 * Using Wrapper class walletDebit
+	  @RequestMapping(value = "/walletDebit", method = RequestMethod.POST)
 	public String createNewdebitCard(@Valid WalletDebit walletDebit,HttpServletRequest request,
 			HttpServletResponse response,BindingResult bindingResult) {
 		System.out.println("In createNewdebitCard POST method");
@@ -251,9 +282,10 @@ public class PassengerController {
 		passengerService.saveWallet(walletDebit.getWallet());
 		
 		return "walletDebit";
-	}
+	}*/
 	
-	/*@RequestMapping(value = "/debitCard", method = RequestMethod.POST)
+	/*Usimg redirectAttribute
+	 @RequestMapping(value = "/debitCard", method = RequestMethod.POST)
 	public String createNewdebitCard(@Valid DebitCard debitCard,HttpServletRequest request,
 			HttpServletResponse response,BindingResult bindingResult,@ModelAttribute("arrWalet") Wallet arrWalet, BindingResult walletBResult) {
 		System.out.println("In createNewdebitCard POST method");

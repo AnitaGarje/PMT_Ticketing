@@ -11,6 +11,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import org.springframework.context.annotation.Scope;
@@ -32,8 +33,8 @@ public class Passenger {
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "passenger")
 	private Set<PassengerTrip> passengerTrips = new HashSet <PassengerTrip>();
 	
-	@OneToMany(cascade = CascadeType.ALL , mappedBy = "passenger")
-	private Set<Wallet> wallets = new HashSet <Wallet>();
+	@OneToOne(cascade = CascadeType.ALL , mappedBy = "passenger")
+	private Wallet wallet = new Wallet();
 	
 	
 	public Set<PassengerTrip> getPassengerTrips() {
@@ -44,12 +45,13 @@ public class Passenger {
 		this.passengerTrips = passengerTrips;
 	}
 
-	public Set<Wallet> getWallets() {
-		return wallets;
+	
+	public Wallet getWallet() {
+		return wallet;
 	}
 
-	public void setWallets(Set<Wallet> wallets) {
-		this.wallets = wallets;
+	public void setWallet(Wallet wallet) {
+		this.wallet = wallet;
 	}
 
 	public int getPid() {

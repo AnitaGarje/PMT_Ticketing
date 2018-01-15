@@ -122,87 +122,53 @@
 			<div id="page-wrapper">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Passenger</h1>
+						<h1 class="page-header">Your Bookings</h1>
 					</div>
 					<!-- /.col-lg-12 -->
 				</div>
 					 <!-- /.row -->
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-6">
-									<form  autocomplete="off" action="#" th:action="@{/passengerTrip}"
-					                        th:object="${passengerTrip}" method="post" class="form-horizontal" role="form">
-										<div class="form-group">
-										<div class="col-sm-9">
-											<label>Select From location:</label>
-								           <select class="form-control" th:field="*{fromloc}" >
-												<option value="0">Select</option>
-												<option value="Katraj">Katraj</option>
-												<option value="balaji Nagar">balaji Nagar</option>
-												<option value="Swarget">Swarget</option>
-												<option value="Shivaji Nagar">Shivaji Nagar</option>
-											</select>
-											</div>
-											</div>
-											<div class="form-group">
-											<div class="col-sm-9">
-											<label>Select To location:</label>
-                                            <select class="form-control" th:field="*{toloc}">
-												<option value="0">Select</option>
-												<option value="Katraj">Katraj</option>
-												<option value="balaji Nagar">balaji Nagar</option>
-												<option value="Swarget">Swarget</option>
-												<option value="Shivaji Nagar">Shivaji Nagar</option>
-											</select>
-											</div>
-											</div>
-											<div class="form-group">
-											<div class="col-sm-9">
-											<label>Select no of tickets:</label>
-								             <select class="form-control" th:field="*{nots}">
-												<option value="0">Select</option>
-												<option value="1">1</option>
-												<option value="1.5">1.5</option>
-												<option value="2">2</option>
-												<option value="2.5">2.5</option>
-												<option value="3">3</option>
-												<option value="3.5">3.5</option>
-												<option value="4">4</option>
-												<option value="4.5">4.5</option>
-												<option value="5">5</option>
-												<option value="5.5">5.5</option>
-											 </select>
-											 </div>
-											</div>
-										 <!--   <div class="form-group">
-										  <div class="col-sm-9">
-												<label for="disabledSelect">Total Amount:</label>
-												<input class="form-control" type="text"  readonly  th:field="*{tktamt}">
-											</div>
-											</div>-->
-											<div class="form-group">
-						                        <div class="col-sm-9">
-											 <button type="submit" class="btn btn-primary">Confirm Booking</button>
-											 </div>
-											 </div>
-									</form>	
-								</div>
-								<!-- /.col-lg-6 (nested) -->
-							</div>
-							<!-- /.row (nested) -->
-						</div>
-						<!-- /.panel-body -->
-					</div>
-					<!-- /.panel -->
-				</div>
-				<!-- /.col-lg-12 -->
-			</div>
-			<!-- /.row -->
-				 
-
+			  <div class="row">
+                <div class="col-lg-6">
+                    <div>
+                        <div class="panel-heading">
+                            Your ticket booking record :
+                        </div>
+                        <!-- /.panel-heading -->
+                        <div>
+                            <div>
+                                <table class="table table-striped table-bordered table-hover">
+                                 <thead>
+                                        <tr>
+                                            <th>No</th>
+											<th>Date</th>
+                                            <th>From location</th>
+                                            <th>To location</th>
+											<th>NOT</th>
+											<th>TicketCost</th>
+											<th>View Cost</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr th:each="PassengerTrip:${TripsByPassenger}">
+                                    		<td th:text="${PassengerTrip.ticketid}">ticketid</td>
+                                           <td th:text="${PassengerTrip.dob}">date</td>
+				 							<td th:text="${PassengerTrip.fromloc}">fromloc</td>
+											<td th:text="${PassengerTrip.toloc}">toloc</td>
+				 							<td th:text="${PassengerTrip.nots}">nots</td>
+				 							<td th:text="${PassengerTrip.tktamt}">tktamt</td>
+                                            <td><button type="submit" class="btn btn-primary">View detail ticket</button></a></td>
+                                        </tr>
+                                      <tbody>
+                                </table>
+                            </div>
+                            <!-- /.table-responsive -->
+                        </div>
+                        <!-- /.panel-body -->
+                    </div>
+                    <!-- /.panel -->
+                </div>
+                <!-- /.col-lg-6 -->
+				
 			</div>
 			<!-- /#wrapper -->
 

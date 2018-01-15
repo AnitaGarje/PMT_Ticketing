@@ -1,8 +1,5 @@
 package com.example.service;
 
-import java.util.Properties;
-import java.util.Random;
-
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -52,10 +49,17 @@ public class PassengerServiceImpl implements PassengerService {
 	@Autowired
 	private NetbankingRepository netbankingRepository;
 
+	
+
 	Cookie newCookie;
 
 	public Passenger findPassengerByPhone(String phoneNo) {
 		return passengerRepository.findByPhoneNo(phoneNo);
+	}
+	public List<PassengerTrip> findPassengerTripByPassenger() {
+		//List<PassengerTrip> ls=new ArrayList<>();
+		//ls.add(passengerTripRepository.findByPassenger(passenger));
+		return passengerTripRepository.findAll();
 	}
 
 	public void savePassenger(Passenger passenger) {
@@ -187,6 +191,41 @@ public class PassengerServiceImpl implements PassengerService {
 		}
 		return avlBal;
 
+	}
+	
+	public double getTicketCost(String from,String to,String nots)
+	{
+		int cost=0;
+		if (from.equals("Katraj") & to.equals("balaji Nagar") || from.equals("balaji Nagar") & to.equals("Katraj"))
+		{
+			cost=5;
+		}
+		else if (from.equals("Katraj") & to.equals("balaji Nagar") || from.equals("balaji Nagar") & to.equals("Katraj"))
+		{
+			cost=10;
+		}
+		else if (from.equals("balaji Nagar") & to.equals("Swarget") || from.equals("Swarget") & to.equals("balaji Nagar"))
+		{
+			cost=10;
+		}
+		else if (from.equals("Katraj") & to.equals("Swarget") || from.equals("Swarget") & to.equals("Katraj"))
+		{
+			cost=10;
+		}
+		else if (from.equals("Katraj") & to.equals("Shivaji Nagar") || from.equals("Shivaji Nagar") & to.equals("Katraj"))
+		{
+			cost=15;
+		}
+		else if (from.equals("Swarget") & to.equals("Shivaji Nagar") || from.equals("Shivaji Nagar") & to.equals("Swarget"))
+		{
+			cost=10;
+		}
+		else if (from.equals(to))
+		{
+			cost=0;
+			System.out.println("Please select from n to different location");
+		}
+		return cost*Double.parseDouble(nots);
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.example.service;
 
+import java.util.List;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -29,5 +31,7 @@ public interface PassengerService {
 	public Wallet getAmtTobeAdded(Passenger passenger);
 	public String sendSMS(String PhoneNo);
 	public double getAvalBalInWallet(HttpServletRequest request, HttpServletResponse response);
+	public double getTicketCost(String from,String to,String nots);
+	public List<PassengerTrip> findPassengerTripByPassenger();
 	
 }

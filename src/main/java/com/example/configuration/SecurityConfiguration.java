@@ -82,6 +82,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/conTktbook").permitAll()
 				.antMatchers("/wallet").permitAll()
 				.antMatchers("/walletDebit").permitAll()
+				.antMatchers("/passengerTrips").permitAll()
 				.antMatchers("/debitCard").permitAll()
 				.antMatchers("/netbanking").permitAll()
 				.antMatchers("/otherPay").permitAll()
