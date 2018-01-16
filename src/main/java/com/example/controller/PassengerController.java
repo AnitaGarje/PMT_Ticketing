@@ -49,6 +49,50 @@ public class PassengerController {
 		return modelAndView;
 	}
 
+	@RequestMapping(value = "/transactionSuccess", method = RequestMethod.GET)
+	public ModelAndView TransactionSuccess() {
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
+	@RequestMapping(value = "/transactionSuccess", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess() {
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
+	@RequestMapping(value = "/transactionFailure", method = RequestMethod.GET)
+	public ModelAndView TransactionFailure() {
+		ModelAndView modelAndView = new ModelAndView("transactionFailure");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/transactionFailure", method = RequestMethod.POST)
+	public ModelAndView PostTransactionFailure() {
+		ModelAndView modelAndView = new ModelAndView("transactionFailure");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
+	@RequestMapping(value = "/transactionCancel", method = RequestMethod.GET)
+	public ModelAndView TransactionCancel() {
+		ModelAndView modelAndView = new ModelAndView("transactionCancel");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/transactionCancel", method = RequestMethod.POST)
+	public ModelAndView PostTransactionCancel() {
+		ModelAndView modelAndView = new ModelAndView("transactionCancel");
+		//Passenger passenger = new Passenger();
+		//modelAndView.addObject("passenger", passenger);
+		return modelAndView;
+	}
 	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
 	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response, BindingResult bindingResult) {
 		System.out.println("In passenger Post meth:" + passenger.getPhoneNo());
@@ -192,7 +236,7 @@ public class PassengerController {
 		wallet.setPassenger(passengerService.getPhoneFromCookie(request, response));
 		System.out.println("from passed wallet object avlBal:" +wallet.getAvalbal());
 		passengerService.saveWallet(wallet);
-		modelAndView.addObject("successMessage", "Moey has been added successfully");
+		modelAndView.addObject("successMessage", "Money has been added successfully");
 		modelAndView.addObject("wallet", new Wallet());
 		modelAndView.setViewName("wallet");
 		return modelAndView ;

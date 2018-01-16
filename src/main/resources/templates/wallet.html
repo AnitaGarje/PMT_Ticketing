@@ -32,7 +32,7 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-
+		
 	</head>
 
 	<body>
@@ -140,38 +140,27 @@
                                        <label for="disabledSelect">Current balance:</label>
                                         <input class="form-control" type="text"  readonly  th:field="*{avalbal}"/>
                                            </div>
-                                           </div>
-                                          
-                                           <div class="form-group">
-                                        <div class="col-sm-9"><br>
-                                       
-                                            	<input type="text" th:field="*{addamt}" placeholder="Enter amount to add wallet:"
-										class="form-control" /> 
-										</div>
+                                       </div>
+										<div class="form-group">
+											<div class="col-sm-9">
+												<label for="disabledSelect">Add 50/- Rs To Wallet:</label>
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/6BB6E29D0E9469F9F63CB8472E2B96B2'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/23.png' /></a></div> 
+											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-sm-9">
-												<button type="submit" class="btn btn-primary">Add To Wallet</button>
+												<label for="disabledSelect">Add 100/- Rs To Wallet:</label>
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/176D2CEFF1134D59F7427C1A5B898AE1'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/23.png' /></a></div> 
 											</div>
 										</div>
-										<span th:utext="${successMessage}"></span>
-                         
-                            <!--  <div class="form-group">
-                             <div class="col-sm-9"><br>
-                                <label>Select Payment Mode :</label><br>
-			                            <button type="submit" class="btn btn-primary" style="color:white" name="Debit" value="Debit">Debit/Credit Card</button><br><p></p>
-								  </div>
-								</div>
-				                <div class="form-group">
-				                     <div class="col-sm-9">
-			                            <button type="submit" class="btn btn-primary" style="color:white" name="Net" value="Net">Netbanking</button><br><p></p>
-								  </div>
-								</div>
-                         <div class="form-group">
-				                     <div class="col-sm-9">
-			                            <button type="submit" class="btn btn-primary" style="color:white" name="other" value="other">Other banking mode</button><br><p></p>
-								  </div>
-								</div>  -->
+										<div class="form-group">
+											<div class="col-sm-9">
+												<label for="disabledSelect">Add 500/- Rs To Wallet:</label>
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/05D82D0C001A802ED73F867B96B53CEF'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/13.png' /></a></div> 
+											</div>
+										</div>
+										
+                        
                                    </form>		
 										 
 									
@@ -207,7 +196,8 @@
 
 					<!-- Custom Theme JavaScript -->
 					<script src="../dist/js/sb-admin-2.js"></script>
-
+					
+			
 				</body>
 
 				</html>
