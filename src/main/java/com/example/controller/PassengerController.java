@@ -1,6 +1,6 @@
 package com.example.controller;
 
-import java.util.HashMap;
+
 import java.util.List;
 import java.util.Map;
 
@@ -18,9 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
-import com.example.model.DebitCard;
-import com.example.model.Netbanking;
-import com.example.model.OtherPay;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
@@ -241,152 +238,9 @@ public class PassengerController {
 		modelAndView.setViewName("wallet");
 		return modelAndView ;
       }
-	/*Using redirect
-	@RequestMapping(value="/wallet", params="Debit" ,method=RequestMethod.POST)
-    public String debit(@Valid Wallet wallet, BindingResult bindingResult,HttpServletRequest request, HttpServletResponse response,RedirectAttributes redir){
-		System.out.println("In wallet POST method");
-		//wallet.setAvalbal(avlBal);
-		wallet.setPassenger(passengerService.getPhoneFromCookie(request, response));
-		System.out.println("from passed wallet object avlBal:" +wallet.getAvalbal());
-		redir.addFlashAttribute("redrWallet", wallet);
-		
-        return "redirect:/walletDebit";
-		//return "wallet";
-      }*/
-	
 
-	@RequestMapping(value="/wallet",params="Net",method=RequestMethod.GET)
-    public String net(){
-        return "redirect:/netbanking";
-    }
-	
-	@RequestMapping(value="/wallet",params="other",method=RequestMethod.GET)
-    public String other(){
-        return "redirect:/otherPay";
-    }
 
-	/*Using Wrapper class
-	 * @RequestMapping(value = "/walletDebit", method = RequestMethod.GET)
-	 
-	public ModelAndView debitCard(@ModelAttribute("redrWallet") Wallet wallet,RedirectAttributes redir,HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("In Debit card GET method");
-		System.out.println("Redirect Attributes:"+wallet.getAddamt()+wallet.getAvalbal());
-		ModelAndView modelAndView = new ModelAndView();
-		DebitCard debitCard = new DebitCard();
-		WalletDebit wd=new WalletDebit();
-		wd.setDebitCard(debitCard);
-		wd.setWallet(wallet);
-		modelAndView.addObject(wd);
-		return modelAndView;
-	}*/
 	
-	/*Using redirect
-	 * 
-	 * @RequestMapping(value = "/debitCard", method = RequestMethod.GET)
-	public String debitCard(@ModelAttribute("redrWallet") Wallet wallet,Model map) {
-		
-		System.out.println("In Debit card GET method");
-		System.out.println("Redirect Attributes:"+wallet.getAddamt()+wallet.getAvalbal());
-		DebitCard debitCard = new DebitCard();
-		map.addAttribute("arrDebitCard",debitCard);
-		map.addAttribute("arrWalet",wallet);
-		//redir.addFlashAttribute("redrWallet", wallet);
-		return "debitCard";
-	}*/
-
-	/*@RequestMapping(value = "/debitCard", method = RequestMethod.POST)
-	public String createNewdebitCard(@Valid DebitCard debitCard,HttpServletRequest request,
-			HttpServletResponse response,BindingResult bindingResult,@ModelAttribute("redrWallet") Wallet wallet, BindingResult walletBResult) {
-		System.out.println("In createNewdebitCard POST method");
-		debitCard.setPassenger(passengerService.getPhoneFromCookie(request, response));
-		passengerService.saveDebitCard(debitCard);
-		System.out.println("After adding debitCard");
-		System.out.println("wallet.getAddamt()"+wallet.getAddamt());
-		System.out.println(wallet.getAvalbal());
-		
-		//System.out.println("Redirect values are ;"+"wallet.getAddamt():"+wallet.getAddamt()+ "wallet.getAvalbal():"+wallet.getAvalbal()+ "wallet.getPassenger().getPid():"+ wallet.getPassenger().getPid());
-		passengerService.saveWallet(wallet);
-		
-		return "debitCard";
-	}*/
-	
-	/*
-	 * Using Wrapper class walletDebit
-	  @RequestMapping(value = "/walletDebit", method = RequestMethod.POST)
-	public String createNewdebitCard(@Valid WalletDebit walletDebit,HttpServletRequest request,
-			HttpServletResponse response,BindingResult bindingResult) {
-		System.out.println("In createNewdebitCard POST method");
-		walletDebit.getDebitCard().setPassenger(passengerService.getPhoneFromCookie(request, response));
-		passengerService.saveDebitCard(walletDebit.getDebitCard());
-		System.out.println("After adding debitCard");
-		System.out.println("walletDebit.getWallet().getAddamt()"+walletDebit.getWallet().getAddamt());
-		System.out.println(walletDebit.getWallet().getAvalbal());
-		
-		//System.out.println("Redirect values are ;"+"wallet.getAddamt():"+wallet.getAddamt()+ "wallet.getAvalbal():"+wallet.getAvalbal()+ "wallet.getPassenger().getPid():"+ wallet.getPassenger().getPid());
-		passengerService.saveWallet(walletDebit.getWallet());
-		
-		return "walletDebit";
-	}*/
-	
-	/*Usimg redirectAttribute
-	 @RequestMapping(value = "/debitCard", method = RequestMethod.POST)
-	public String createNewdebitCard(@Valid DebitCard debitCard,HttpServletRequest request,
-			HttpServletResponse response,BindingResult bindingResult,@ModelAttribute("arrWalet") Wallet arrWalet, BindingResult walletBResult) {
-		System.out.println("In createNewdebitCard POST method");
-		debitCard.setPassenger(passengerService.getPhoneFromCookie(request, response));
-		passengerService.saveDebitCard(debitCard);
-		System.out.println("After adding debitCard");
-		System.out.println("arrWalet.getAddamt()"+arrWalet.getAddamt());
-		System.out.println(arrWalet.getAvalbal());
-		
-		//System.out.println("Redirect values are ;"+"wallet.getAddamt():"+wallet.getAddamt()+ "wallet.getAvalbal():"+wallet.getAvalbal()+ "wallet.getPassenger().getPid():"+ wallet.getPassenger().getPid());
-		passengerService.saveWallet(arrWalet);
-		
-		return "debitCard";
-	}*/
-	
-	
-   @RequestMapping(value = "/netbanking", method = RequestMethod.GET)
-	public ModelAndView netbanking() {
-		ModelAndView modelAndView = new ModelAndView();
-		Netbanking netbanking = new Netbanking();
-		modelAndView.addObject("netbanking", netbanking);
-		modelAndView.setViewName("netbanking");
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/netbanking", method = RequestMethod.POST)
-	public ModelAndView createNewdebitCard(@Valid Netbanking netbanking, BindingResult bindingResult) {
-		System.out.println("In createNewnetbanking Method");
-		ModelAndView modelAndView = new ModelAndView();
-		passengerService.saveNetbanking(netbanking);
-		modelAndView.addObject("netbanking", new Netbanking());
-		modelAndView.setViewName("netbanking");
-		// }
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/otherPay", method = RequestMethod.GET)
-	public ModelAndView otherPay() {
-		ModelAndView modelAndView = new ModelAndView();
-		OtherPay otherPay = new OtherPay();
-		modelAndView.addObject("otherPay", otherPay);
-		modelAndView.setViewName("otherPay");
-		return modelAndView;
-	}
-
-	@RequestMapping(value = "/otherPay", method = RequestMethod.POST)
-	public ModelAndView createNewotherPay(@Valid OtherPay otherPay, BindingResult bindingResult) {
-		System.out.println("In createOtherPay Method");
-		ModelAndView modelAndView = new ModelAndView();
-		passengerService.saveOtherPay(otherPay);
-		modelAndView.addObject("otherPay", new OtherPay());
-		modelAndView.setViewName("otherPay");
-
-		// }
-		return modelAndView;
-	}
-	
-	
-
 }
+	
+	

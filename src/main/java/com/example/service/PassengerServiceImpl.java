@@ -40,17 +40,6 @@ public class PassengerServiceImpl implements PassengerService {
 	@Autowired
 	private PassengerTripRepository passengerTripRepository;
 
-	@Autowired
-	private DebitCardRepository debitCardRepository;
-
-	@Autowired
-	private OtherPayRepository otherPayRepository;
-
-	@Autowired
-	private NetbankingRepository netbankingRepository;
-
-	
-
 	Cookie newCookie;
 
 	public Passenger findPassengerByPhone(String phoneNo) {
@@ -75,18 +64,6 @@ public class PassengerServiceImpl implements PassengerService {
 		walletRepository.save(wallet);
 	}
 
-	public void saveDebitCard(DebitCard debitCard) {
-		debitCardRepository.save(debitCard);
-	}
-
-	public void saveNetbanking(Netbanking netbanking) {
-		netbankingRepository.save(netbanking);
-	}
-
-	public void saveOtherPay(OtherPay otherPay) {
-		System.out.println("In saveOtherPay Method");
-		otherPayRepository.save(otherPay);
-	}
 
 	public Wallet getAvailBal(Passenger passenger) {
 		System.out.println("In getAvailBal Method");
@@ -227,5 +204,6 @@ public class PassengerServiceImpl implements PassengerService {
 		}
 		return cost*Double.parseDouble(nots);
 	}
+
 
 }

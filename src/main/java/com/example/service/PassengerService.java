@@ -19,9 +19,6 @@ public interface PassengerService {
 	//public void savePassengerOtp(PassengerOtp passengerOtp);
 	public void savePassengerTrip(PassengerTrip passengerTrip);
 	public void saveWallet(Wallet wallet);
-	public void saveDebitCard(DebitCard debitCard);
-	public void saveNetbanking(Netbanking netbanking);
-	public void saveOtherPay(OtherPay otherPay); 
 	public void setPhoneToCookie(HttpServletRequest request,
 	         HttpServletResponse response,String PhoneNo);
 	public Passenger getPhoneFromCookie(HttpServletRequest request,
