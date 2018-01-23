@@ -13,6 +13,7 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.validation.constraints.Pattern;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
@@ -27,8 +28,9 @@ public class Passenger {
 	@Column(name = "pid")
 	private int pid;
 	
-	@Column(name = "phoneNo")
-	private String phoneNo;
+    @Column(name = "phoneNo")
+	@Pattern(regexp="(^$|[0-9]{10})",message = "*Please provide a valid mobile no")
+    private String phoneNo;
 
 	@OneToMany(cascade = CascadeType.ALL , mappedBy = "passenger")
 	private Set<PassengerTrip> passengerTrips = new HashSet <PassengerTrip>();

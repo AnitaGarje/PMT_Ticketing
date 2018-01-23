@@ -8,15 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-import com.example.model.DebitCard;
-import com.example.model.Netbanking;
-import com.example.model.OtherPay;
+
 import com.example.model.Passenger;
 import com.example.model.PassengerTrip;
 import com.example.model.Wallet;
-import com.example.repository.DebitCardRepository;
-import com.example.repository.NetbankingRepository;
-import com.example.repository.OtherPayRepository;
 import com.example.repository.PassengerRepository;
 import com.example.repository.PassengerTripRepository;
 import com.example.repository.WalletRepository;

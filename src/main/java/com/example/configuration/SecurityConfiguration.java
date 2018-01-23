@@ -41,21 +41,6 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	private String passengerTripQuery;
 	
 	
-	@Value("${spring.queries.debitCard-query}")
-	private String debitCardQuery;
-	
-	@Value("${spring.queries.netbanking-query}")
-	private String netbankingQuery;
-	
-	@Value("${spring.queries.otherPay-query}")
-	private String otherPayQuery;
-	
-	@Value("${spring.queries.conRegister-query}")
-	private String conRegisterQuery;
-	
-	@Value("${spring.queries.conLogin-query}")
-	private String conLoginQuery;
-	
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth)
 			throws Exception {
@@ -77,6 +62,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/passenger").permitAll()
 				.antMatchers("/passengerOtp").permitAll()
 				.antMatchers("/passengerTrip").permitAll()
+				.antMatchers("/passengerTrips").permitAll()
 				.antMatchers("/passengerPay").permitAll()
 				.antMatchers("/successfulPayed").permitAll()
 				.antMatchers("/wallet").permitAll()

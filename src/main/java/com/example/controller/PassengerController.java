@@ -15,6 +15,8 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
@@ -90,14 +92,31 @@ public class PassengerController {
 		//modelAndView.addObject("passenger", passenger);
 		return modelAndView;
 	}
+	
+	
 	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
-	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response, BindingResult bindingResult) {
+	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response,BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView();
+		Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
+		if (passengerExists != null) {
+			bindingResult
+					.rejectValue("phoneNo", "error.passenger",
+							"There is already a user registered with the email provided");
+		}
 		System.out.println("In passenger Post meth:" + passenger.getPhoneNo());
-		passengerService.savePassenger(passenger);
-		passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
+		if (bindingResult.hasErrors()) {
+			modelAndView.setViewName("passenger");
+		} else {
+			passengerService.savePassenger(passenger);
+			passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
+			modelAndView.addObject("successMessage", "login successfully");
+			modelAndView.addObject("passenger", new Passenger());
+			modelAndView.setViewName("passenger");
+			
+		}
 		return "redirect:/passengerOtp";
-	}
-
+	}	
+	
 	@RequestMapping(value = "/passengerOtp", method = RequestMethod.GET)
 	public ModelAndView passengerOtp(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -139,6 +158,16 @@ public class PassengerController {
 		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
 		modelAndView.setViewName("passengerTrips");
 		return modelAndView;
+	}
+	
+	
+	@RequestMapping(value = "/getBusDetails", method = RequestMethod.POST)
+	public @ResponseBody getBusDetails(@RequestParam String fromloc,@RequestParam String toloc,@RequestParam String mode) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
+		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
+		modelAndView.setViewName("passengerTrips");
+		return "asdas";
 	}
 
 	

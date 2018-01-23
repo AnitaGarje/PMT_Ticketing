@@ -2,7 +2,7 @@ package com.example.model;
 
 public class WalletDebit {
 	
-	private Wallet wallet;
+/*	private Wallet wallet;
 	
 	private DebitCard debitCard;
 	
@@ -17,6 +17,6 @@ public class WalletDebit {
 	}
 	public void setDebitCard(DebitCard debitCard) {
 		this.debitCard = debitCard;
-	}
+	}*/
 	
 }
