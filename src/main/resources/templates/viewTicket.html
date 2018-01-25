@@ -94,14 +94,14 @@
                         <div class="panel-body">
                             <div class="row">
                                 <div id="content" style="text-transform: uppercase;text-align:center;">
-                         			Ticket No:<span th:text="${passengerTrip.ticketid}"></span> 
-							        Bus No:<span th:text="${passengerTrip.busnumber}"></span>
+                         			<p>TICKET NO:<span th:text="${passengerTrip.ticketid}"></span></p> 
+							        <p>BUS NO:<span th:text="${passengerTrip.busnumber}"></span></p> 
 							        <p><span th:text="${passengerTrip.dob}"></span></p>
-							        <b><span th:text="${passengerTrip.fromloc}"></span></b></p>
+							        <p><b><span th:text="${passengerTrip.fromloc}"></span></b></p>
 							        <p><b>TO</b></p>
-							        <p><b><span th:text="${passengerTrip.toloc}"></span></b></p>
-							        <p>No Of Ticket : <b><span th:text="${passengerTrip.nots}"></span></b></p>
-							        <p><b>Total:<span th:text="${passengerTrip.tktamt}"></span></b></p>			      
+							        <p><b><span  th:text="${passengerTrip.toloc}"></span></b></p>
+							        <p>NO OF TICKETS : <b><span th:text="${passengerTrip.nots}"></span></b></p>
+							        <p><b>TOTAL:<span th:text="${passengerTrip.tktamt}"></span></b></p>			      
 				          		 </div>
                             </div>
                             <div class="row" style="text-align: center;">
@@ -126,6 +126,8 @@
 					<script src="/vendor/jquery/jquery.min.js" th:src="@{/vendor/jquery/jquery.min.js}"></script>
 					 <!-- generate pdf jQuery -->
 					<script src="/vendor/jquery/jspdf-min.js" th:src="@{/vendor/jquery/jspdf.min.js}"></script>
+					
+					<script src="/vendor/jquery/html2canvas.js" th:src="@{/vendor/jquery/html2canvas.js}"></script>
 					   <!-- generate pdf jQuery -->
 					<script src="/vendor/jquery/generate-pdf.js" th:src="@{/vendor/jquery/generate-pdf.js}"></script>
 					 
