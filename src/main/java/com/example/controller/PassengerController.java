@@ -2,6 +2,7 @@ package com.example.controller;
 
 
 import java.io.IOException;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -24,16 +25,17 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.AddLocation;
 import com.example.model.Bus;
-import com.example.model.FlyingSoucerTestService;
+
 import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
-import com.example.model.TicketPdf;
+
 import com.example.model.User;
 import com.example.model.Wallet;
 import com.example.model.WalletDebit;
 import com.example.service.PassengerService;
+import com.example.service.PdfGenaratorUtil;
 import com.lowagie.text.DocumentException;
 
 
@@ -43,6 +45,9 @@ public class PassengerController {
 	@Autowired
 	private PassengerService passengerService;
 	
+	@Autowired
+	PdfGenaratorUtil pdfGenaratorUtil;
+
 	
 	String OTP;
 	double avlBal=0.0;
@@ -379,6 +384,15 @@ public class PassengerController {
 		System.out.println(passengerTrip.toString());
 		///TicketPdf tpdf=new TicketPdf();
 		//tpdf.main1(null);
+		
+		 Map<String,String> data = new HashMap<String,String>();
+		    data.put("name","James");
+		    try {
+				pdfGenaratorUtil.createPdf("viewTicket",data);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} 
 	
 		return modelAndView;
 	}
