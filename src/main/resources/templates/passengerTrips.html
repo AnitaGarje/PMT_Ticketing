@@ -108,8 +108,34 @@
 				 							<td th:text="${PassengerTrip.nots}">nots</td>
 				 							<td th:text="${PassengerTrip.tktamt}">tktamt</td>
                                            <!--  <td><button type="submit" class="btn btn-primary">View detail ticket</button></a></td>-->
-                                            <td><a  th:href="${'viewTicket/'+{PassengerTrip.ticketid}}">view</a></td>
-                                        </tr>
+                                           <!--   <td><a  th:href="${'viewTicket/'+{PassengerTrip.ticketid}}">view</a></td>-->
+                                            <td>
+                                            <script>
+                                            $("#myModal").empty().append(myModal);
+                                            </script>
+                                            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#myModal">View</button>
+
+											 <!-- Modal -->
+											 <div class="modal fade" id="myModal" role="dialog">
+											   <div class="modal-dialog modal-sm">
+											     <div class="modal-content">
+											       <div class="modal-header">
+											         <button type="button" class="close" data-dismiss="modal">&times;</button>
+											         <h4 class="modal-title">P M P M L</h4>
+											       </div>
+											       <div class="modal-body" style="text-transform: uppercase;text-align:center;">
+											        Ticket No:<span th:text="${PassengerTrip.ticketid}"></span> 
+											        Bus No:<span th:text="${PassengerTrip.busnumber}"></span>
+											        <p><span th:text="${PassengerTrip.dob}"></span></p>
+											        <b><span th:text="${PassengerTrip.fromloc}"></span></b></p>
+											        <p><b>TO</b></p>
+											        <p><b><span th:text="${PassengerTrip.toloc}"></span></b></p>
+											        <p>No Of Ticket : <b><span th:text="${PassengerTrip.nots}"></span></b></p>
+											        <p><b>Total:<span th:text="${PassengerTrip.tktamt}"></span></b></p>
+											       </div>
+											       
+											   </td>
+										 </tr>
                                       </tbody>
                                 </table>
                                  </div>

@@ -35,8 +35,7 @@ import com.example.model.User;
 import com.example.model.Wallet;
 import com.example.model.WalletDebit;
 import com.example.service.PassengerService;
-import com.example.service.PdfGenaratorUtil;
-import com.lowagie.text.DocumentException;
+
 
 
 @Controller
@@ -45,9 +44,6 @@ public class PassengerController {
 	@Autowired
 	private PassengerService passengerService;
 	
-	@Autowired
-	PdfGenaratorUtil pdfGenaratorUtil;
-
 	
 	String OTP;
 	double avlBal=0.0;
@@ -381,18 +377,12 @@ public class PassengerController {
 		System.out.println("In viewTicket GET Method ");
 		ModelAndView modelAndView = new ModelAndView("viewTicket");
 		PassengerTrip  passengerTrip=passengerService.findOneTrip(id);
+		modelAndView.addObject("passengerTrip",passengerTrip);
 		System.out.println(passengerTrip.toString());
 		///TicketPdf tpdf=new TicketPdf();
 		//tpdf.main1(null);
 		
-		 Map<String,String> data = new HashMap<String,String>();
-		    data.put("name","James");
-		    try {
-				pdfGenaratorUtil.createPdf("viewTicket",data);
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} 
+		
 	
 		return modelAndView;
 	}
