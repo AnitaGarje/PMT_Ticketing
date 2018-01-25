@@ -95,8 +95,8 @@
                                             <th>From location</th>
                                             <th>To location</th>
 											<th>NOT</th>
-											<th>TicketCost</th>
-											<th>View Cost</th>
+											<th>Ticket Cost</th>
+											<th>View Ticket</th>
                                         </tr>
                                     </thead>
                                     <tbody>
@@ -107,7 +107,8 @@
 											<td th:text="${PassengerTrip.toloc}">toloc</td>
 				 							<td th:text="${PassengerTrip.nots}">nots</td>
 				 							<td th:text="${PassengerTrip.tktamt}">tktamt</td>
-                                            <td><button type="submit" class="btn btn-primary">View detail ticket</button></a></td>
+                                           <!--  <td><button type="submit" class="btn btn-primary">View detail ticket</button></a></td>-->
+                                            <td><a  th:href="${'viewTicket/'+{PassengerTrip.ticketid}}">view</a></td>
                                         </tr>
                                       <tbody>
                                 </table>

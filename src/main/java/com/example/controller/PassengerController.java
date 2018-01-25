@@ -1,6 +1,7 @@
 package com.example.controller;
 
 
+import java.io.IOException;
 import java.util.List;
 import java.util.Map;
 
@@ -13,6 +14,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,13 +22,20 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.example.model.AddLocation;
+import com.example.model.Bus;
+import com.example.model.FlyingSoucerTestService;
+import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
+import com.example.model.TicketPdf;
 import com.example.model.User;
 import com.example.model.Wallet;
 import com.example.model.WalletDebit;
 import com.example.service.PassengerService;
+import com.lowagie.text.DocumentException;
+
 
 @Controller
 public class PassengerController {
@@ -144,9 +153,14 @@ public class PassengerController {
 
 	@RequestMapping(value = "/passengerTrip", method = RequestMethod.GET)
 	public ModelAndView passengerTrip() {
+		
+		List<Location> locationList=passengerService.getAllLocations();
+		List<Bus> busList=passengerService.getAllBus();
 		ModelAndView modelAndView = new ModelAndView();
 		PassengerTrip passengerTrip = new PassengerTrip();
 		modelAndView.addObject("passengerTrip", passengerTrip);
+		modelAndView.addObject("locationList", locationList);
+		modelAndView.addObject("busList", busList);
 		modelAndView.setViewName("passengerTrip");
 		return modelAndView;
 	}
@@ -161,14 +175,14 @@ public class PassengerController {
 	}
 	
 	
-	@RequestMapping(value = "/getBusDetails", method = RequestMethod.POST)
+	/*@RequestMapping(value = "/getBusDetails", method = RequestMethod.POST)
 	public @ResponseBody getBusDetails(@RequestParam String fromloc,@RequestParam String toloc,@RequestParam String mode) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
 		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
 		modelAndView.setViewName("passengerTrips");
 		return "asdas";
-	}
+	}*/
 
 	
 	@RequestMapping(value = "/passengerTrip", method = RequestMethod.POST)
@@ -268,8 +282,106 @@ public class PassengerController {
 		return modelAndView ;
       }
 
-
+	@RequestMapping(value = "/addLocation", method = RequestMethod.GET)
+	public ModelAndView addLocation() {
+		ModelAndView modelAndView = new ModelAndView("addLocation");
+		AddLocation adl = new AddLocation();
+		modelAndView.addObject("addLocation", adl);
+		return modelAndView;
+	}
 	
+	
+
+	@RequestMapping(value = "/addLocation", method = RequestMethod.POST)
+	public ModelAndView createNewRoute(@Valid AddLocation addloc,BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView("addLocation");
+		//Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
+		//if (passengerExists != null) {
+			//bindingResult
+				//	.rejectValue("phoneNo", "error.passenger",
+						//	"There is already a user registered with the email provided");
+		//}
+		try{
+			
+		
+			System.out.println("In addLocation Post meth:");
+			if (bindingResult.hasErrors()) {
+				modelAndView.setViewName("addLocation");
+			} else {
+				passengerService.saveRoute(addloc);
+				Location l1=new Location();
+				l1.setLoc(addloc.getFromloc());
+				passengerService.saveLocation(l1);
+				
+				Location l2=new Location();
+				l2.setLoc(addloc.getToloc());
+				passengerService.saveLocation(l2);
+				modelAndView.addObject("successMessage", "Route added successfully");
+				modelAndView.addObject("addLocation", new AddLocation());
+				
+			}
+		}
+		catch(Exception mse)
+		{
+			modelAndView.addObject("successMessage", "Route already added please enter new locations");
+			modelAndView.addObject("addLocation", new AddLocation());
+		}
+		return modelAndView;
+	}	
+	
+	
+	@RequestMapping(value = "/addBus", method = RequestMethod.GET)
+	public ModelAndView addBus() {
+		ModelAndView modelAndView = new ModelAndView("addBus");
+		Bus bus = new Bus();
+		modelAndView.addObject("bus", bus);
+		return modelAndView;
+	}
+	
+	
+
+	@RequestMapping(value = "/addBus", method = RequestMethod.POST)
+	public ModelAndView addNewBus(@Valid Bus bus,BindingResult bindingResult) {
+		ModelAndView modelAndView = new ModelAndView("addBus");
+		//Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
+		//if (passengerExists != null) {
+			//bindingResult
+				//	.rejectValue("phoneNo", "error.passenger",
+						//	"There is already a user registered with the email provided");
+		//}
+		try{
+			
+		
+			System.out.println("In addNewBus Post meth:");
+			if (bindingResult.hasErrors()) {
+				modelAndView.setViewName("addBus");
+			} else {
+				passengerService.saveBus(bus);
+				modelAndView.addObject("successMessage", "Bus added successfully");
+				modelAndView.addObject("bus", new Bus());
+				
+			}
+		}
+		catch(Exception mse)
+		{
+			modelAndView.addObject("successMessage", "Bus already added please enter new Bus");
+			modelAndView.addObject("bus", new Bus());
+		}
+		return modelAndView;
+	}	
+	
+	
+	@RequestMapping(value = "/viewTicket/{id}", method = RequestMethod.GET)
+	public ModelAndView viewTicket(@PathVariable("id") int id) {
+		System.out.println("In viewTicket GET Method ");
+		ModelAndView modelAndView = new ModelAndView("viewTicket");
+		PassengerTrip  passengerTrip=passengerService.findOneTrip(id);
+		System.out.println(passengerTrip.toString());
+		///TicketPdf tpdf=new TicketPdf();
+		//tpdf.main1(null);
+	
+		return modelAndView;
+	}
 }
 	
 	

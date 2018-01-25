@@ -5,6 +5,9 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.example.model.AddLocation;
+import com.example.model.Bus;
+import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
@@ -27,5 +30,10 @@ public interface PassengerService {
 	public double getAvalBalInWallet(HttpServletRequest request, HttpServletResponse response);
 	public double getTicketCost(String from,String to,String nots);
 	public List<PassengerTrip> findPassengerTripByPassenger();
-	
+	public void saveRoute(AddLocation addloc);
+	public void saveLocation(Location loc);
+	public List<Location> getAllLocations();
+	public void saveBus(Bus bus);
+	public List<Bus> getAllBus();
+	public PassengerTrip findOneTrip(int id);
 }

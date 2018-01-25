@@ -40,6 +40,11 @@ public class PassengerTrip {
 	@Column(name="tktamt")
 	private double tktamt;
 	
+	@Column(name = "busnumber")
+	private String busnumber;
+	
+	
+	
 	@Temporal(TemporalType.TIMESTAMP)
 	@Column(name="dob", nullable = false,
 	    columnDefinition="TIMESTAMP default CURRENT_TIMESTAMP on update CURRENT_TIMESTAMP")
@@ -105,6 +110,15 @@ public class PassengerTrip {
 
 	public void setDob(Date dob) {
 		this.dob = dob;
+	}
+
+	
+	public String getBusnumber() {
+		return busnumber;
+	}
+
+	public void setBusnumber(String busnumber) {
+		this.busnumber = busnumber;
 	}
 
 	@Override

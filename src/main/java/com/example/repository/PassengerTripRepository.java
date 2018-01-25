@@ -9,11 +9,13 @@ import com.example.model.PassengerTrip;
 import com.example.model.Wallet;
 
 @Repository("passengerTripRepository")
-public  interface PassengerTripRepository  extends JpaRepository <PassengerTrip, Long>{
+public  interface PassengerTripRepository  extends JpaRepository <PassengerTrip, Integer>{
 	
 	//List<PassengerTrip> findAll(Passenger passenger);
 	PassengerTrip findByPassenger(Passenger passenger);
 	List<PassengerTrip> findAll();
 	//List<PassengerTrip> findAll(Passenger passenger);
+	//PassengerTrip findOne(Long id);
+	
 
 }

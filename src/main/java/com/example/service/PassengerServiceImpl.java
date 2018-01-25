@@ -8,10 +8,15 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 
-
+import com.example.model.AddLocation;
+import com.example.model.Bus;
+import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerTrip;
 import com.example.model.Wallet;
+import com.example.repository.AddLocationRepository;
+import com.example.repository.BusRepository;
+import com.example.repository.LocationRepository;
 import com.example.repository.PassengerRepository;
 import com.example.repository.PassengerTripRepository;
 import com.example.repository.WalletRepository;
@@ -34,6 +39,17 @@ public class PassengerServiceImpl implements PassengerService {
 
 	@Autowired
 	private PassengerTripRepository passengerTripRepository;
+	
+	@Autowired
+	private AddLocationRepository addLocationRepository;
+	
+	@Autowired
+	private LocationRepository locationRepository;
+	
+	@Autowired
+	private BusRepository busRepository;
+	
+	
 
 	Cookie newCookie;
 
@@ -198,6 +214,41 @@ public class PassengerServiceImpl implements PassengerService {
 			System.out.println("Please select from n to different location");
 		}
 		return cost*Double.parseDouble(nots);
+	}
+	@Override
+	public void saveRoute(AddLocation addloc) {
+		
+		
+		System.out.println("In saveRoute save method using CRUD");
+		addLocationRepository.save(addloc);
+	}
+	@Override
+	public void saveLocation(Location loc) {
+		// TODO Auto-generated method stub
+		System.out.println("In saveLocation save method using CRUD");
+		locationRepository.save(loc);
+		
+	}
+	@Override
+	public List<Location> getAllLocations() {
+		// TODO Auto-generated method stub
+		return locationRepository.findAll();
+	}
+	@Override
+	public void saveBus(Bus bus) {
+		System.out.println("In saveBus save method using CRUD");
+		busRepository.save(bus);
+		
+	}
+	@Override
+	public List<Bus> getAllBus() {
+		// TODO Auto-generated method stub
+		return busRepository.findAll();
+	}
+	@Override
+	public PassengerTrip findOneTrip(int id) {
+		// TODO Auto-generated method stub
+		return passengerTripRepository.findOne(id);
 	}
 
 

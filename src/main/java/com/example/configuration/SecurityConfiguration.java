@@ -65,6 +65,11 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 				.antMatchers("/passengerTrips").permitAll()
 				.antMatchers("/passengerPay").permitAll()
 				.antMatchers("/successfulPayed").permitAll()
+				.antMatchers("/addLocation").permitAll()
+				.antMatchers("/viewTicket").permitAll()	
+				.antMatchers("/viewTicket/{id}").permitAll()	
+				.antMatchers("/addBus").permitAll()
+				.antMatchers("/Ticket.pdf").permitAll()
 				.antMatchers("/wallet").permitAll()
 				.antMatchers("/transactionCancel").permitAll()
 				.antMatchers("/transactionSuccess").permitAll()
@@ -85,7 +90,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 	public void configure(WebSecurity web) throws Exception {
 	    web
 	       .ignoring()
-	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/data/**","/dist/**","/less/**");
+	       .antMatchers("/resources/**", "/static/**", "/css/**", "/js/**", "/images/**","/vendor/**","/data/**","/dist/**","/less/**","/demo/**");
 	}
 
 }
