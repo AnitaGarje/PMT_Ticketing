@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	
 
 	<title>PMT-Ticketing</title>
 
@@ -32,11 +33,9 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
-		
-	<!-- Added for PayuMoney -->
-	<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" >
-	</head>
 
+	</head>
+	<!--   <meta http-equiv="refresh" content="10" >-->
 	<body>
 
 		<div id="wrapper">
@@ -75,7 +74,7 @@
 			<div id="page-wrapper">
 				<div class="row">
 					<div class="col-lg-12">
-						<h1 class="page-header">Add Money To PMT-Wallet</h1>
+						<h1 class="page-header">Passenger</h1>
 					</div>
 					<!-- /.col-lg-12 -->
 				</div>
@@ -86,64 +85,6 @@
 						<div class="panel-body">
 							<div class="row">
 								<div class="col-lg-6">
-									  <form autocomplete="off" action="#" th:action="@{/wallet}"  th:object="${wallet}" method="post" class="form-horizontal"  role="form">
-									  <div class="form-group">
-									  <div class="col-sm-9">
-                                       
-                                       <label for="disabledSelect">Current balance:</label>
-                                        <input class="form-control" type="text"  readonly  th:field="*{avalbal}"/>
-                                           </div>
-                                       </div>
-										<div class="form-group">
-											<div class="col-sm-9">
-												<label for="disabledSelect">Add 50/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/6F9D8601D265C41042FC47E5718729C9'>
-												<img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/21.png' /></a></div>
-												
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-9">
-												<label for="disabledSelect">Add 100/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/6F9D8601D265C41042FC47E5718729C9'>
-												<img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/21.png' /></a></div>
-												
-											</div>
-										</div>
-										<div class="form-group">
-											<div class="col-sm-9">
-												<label for="disabledSelect">Add 500/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/6F9D8601D265C41042FC47E5718729C9'>
-												<img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/21.png' /></a></div>
-												
-											</div>
-										</div>
-										
-										<script>
-										bolt.launch({
-										key: 'KEY',
-										txnid: 'mtx' hash: 'hash',
-										amount: '1',
-										firstname: 'Jaysinh',
-										email: 'dummyemail@dummy.com',
-										phone: '6111111111',
-										productinfo: 'Bag',
-										surl : 'https://sucess-url.in',
-										furl: 'https://fail-url.in'
-										
-										},{ responseHandler: function(response){
-										// your payment response Code goes here
-										},
-										catchException: function(response){
-										// the code you use to handle the integration errors goes here
-										}
-										});
-										</script>
-										
-										<span th:utext="${successMessage}"></span>
-                        
-                                   </form>		
-										 
 									
 								</div>
 								<!-- /.col-lg-6 (nested) -->
@@ -157,6 +98,7 @@
 				<!-- /.col-lg-12 -->
 			</div>
 			<!-- /.row -->
+				 
 
 			</div>
 			<!-- /#wrapper -->
@@ -177,9 +119,20 @@
 
 					<!-- Custom Theme JavaScript -->
 					<script src="../dist/js/sb-admin-2.js"></script>
+					<!--  <script type="text/javascript">
+					/add this js script into the web page,
+					//you want reload once after first load
+					window.onload = function() {
+					    //considering there aren't any hashes in the urls already
+					    if(!window.location.hash) {
+					        //setting window location
+					        window.location = window.location + '#loaded';
+					        //using reload() method to reload web page
+					        window.location.reload();
+					    }
+					}
 					
-				<script id="bolt" src="https://sboxcheckout-static.citruspay.com/bolt/run/bolt.min.js" bolt-
-				color="<color-code>" bolt-logo="<image path>"></script>
+					</script>-->
 
 				</body>
 

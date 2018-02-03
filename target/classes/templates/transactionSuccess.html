@@ -8,6 +8,7 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
+	
 
 	<title>PMT-Ticketing</title>
 
@@ -34,7 +35,7 @@
 		<![endif]-->
 
 	</head>
-
+	<!--   <meta http-equiv="refresh" content="10" >-->
 	<body>
 
 		<div id="wrapper">
@@ -92,7 +93,7 @@
                                            </div>
                                            <div class="form-group">
 										   <div class="col-sm-9">
-									<p><b>Your Money is added to wallet Successfully </b></p>
+										<b><span th:utext="${successMessage}"></span></b>
 									 <button type="submit" class="btn btn-primary" name="Done" value="Done"><a style="color:white">Done</a></button>
 									 </div>
 									 </div>
@@ -130,6 +131,20 @@
 
 					<!-- Custom Theme JavaScript -->
 					<script src="../dist/js/sb-admin-2.js"></script>
+					<!--  <script type="text/javascript">
+					/add this js script into the web page,
+					//you want reload once after first load
+					window.onload = function() {
+					    //considering there aren't any hashes in the urls already
+					    if(!window.location.hash) {
+					        //setting window location
+					        window.location = window.location + '#loaded';
+					        //using reload() method to reload web page
+					        window.location.reload();
+					    }
+					}
+					
+					</script>-->
 
 				</body>
 

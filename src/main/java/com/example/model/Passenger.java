@@ -32,14 +32,14 @@ public class Passenger {
 	@Pattern(regexp="(^$|[0-9]{10})",message = "*Please provide a valid mobile no")
     private String phoneNo;
 
-	@OneToMany(cascade = CascadeType.ALL , mappedBy = "passenger")
+	/*@OneToMany
 	private Set<PassengerTrip> passengerTrips = new HashSet <PassengerTrip>();
 	
-	@OneToOne(cascade = CascadeType.ALL , mappedBy = "passenger")
-	private Wallet wallet = new Wallet();
+	@OneToOne
+	private Wallet wallet = new Wallet();*/
 	
 	
-	public Set<PassengerTrip> getPassengerTrips() {
+	/*public Set<PassengerTrip> getPassengerTrips() {
 		return passengerTrips;
 	}
 
@@ -54,7 +54,7 @@ public class Passenger {
 
 	public void setWallet(Wallet wallet) {
 		this.wallet = wallet;
-	}
+	}*/
 
 	public int getPid() {
 		return pid;
@@ -70,6 +70,28 @@ public class Passenger {
 
 	public void setPhoneNo(String phoneNo) {
 		this.phoneNo = phoneNo;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + pid;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Passenger other = (Passenger) obj;
+		if (pid != other.pid)
+			return false;
+		return true;
 	}
 	
  

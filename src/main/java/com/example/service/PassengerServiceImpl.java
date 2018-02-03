@@ -52,13 +52,12 @@ public class PassengerServiceImpl implements PassengerService {
 	
 
 	Cookie newCookie;
+	Cookie walletCookie;
 
 	public Passenger findPassengerByPhone(String phoneNo) {
 		return passengerRepository.findByPhoneNo(phoneNo);
 	}
 	public List<PassengerTrip> findPassengerTripByPassenger() {
-		//List<PassengerTrip> ls=new ArrayList<>();
-		//ls.add(passengerTripRepository.findByPassenger(passenger));
 		return passengerTripRepository.findAll();
 	}
 
@@ -76,21 +75,12 @@ public class PassengerServiceImpl implements PassengerService {
 	}
 
 
-	public Wallet getAvailBal(Passenger passenger) {
-		System.out.println("In getAvailBal Method");
-		return walletRepository.findByPassenger(passenger);
-	}
-
 	public PassengerTrip getTicketAmt(Passenger passenger) {
 		System.out.println("In getTicketAmt Method");
 		return passengerTripRepository.findByPassenger(passenger);
 	}
 
-	public Wallet getAmtTobeAdded(Passenger passenger) {
-		System.out.println("In getAmtTobeAdded Method");
-		return walletRepository.findByPassenger(passenger);
-
-	}
+	
 
 	public void setPhoneToCookie(HttpServletRequest request, HttpServletResponse response, String PhoneNo) {
 		System.out.println("Before creating Cookies :");
@@ -116,6 +106,32 @@ public class PassengerServiceImpl implements PassengerService {
 
 		return null;
 	}
+	
+	public void setAmountToCookie(HttpServletRequest request, HttpServletResponse response, String Amt) {
+		System.out.println("Before creating Cookies :");
+		// Add Phone number to cookie
+		walletCookie = new Cookie("CookieWalletAmt", Amt);
+		walletCookie.setMaxAge(24 * 60 * 60);
+		System.out.println("After creating Cookies :");
+		response.addCookie(walletCookie);
+		System.out.println("After adding to Cookies :");
+	}
+	
+	public String getWalletAmtCookie(HttpServletRequest request, HttpServletResponse response) {
+		Cookie[] cookies = request.getCookies();
+
+		if (cookies != null) {
+			for (Cookie cookie : cookies) {
+				if (cookie.getName().equals("CookieWalletAmt")) {
+
+					return cookie.getValue();
+				}
+			}
+		}
+
+		return null;
+	}
+
 
 	public String sendSMS(String PhoneNo) {
 		String OTP = "NOOTP";
@@ -162,58 +178,12 @@ public class PassengerServiceImpl implements PassengerService {
 
 	}
 	
-	public double getAvalBalInWallet(HttpServletRequest request, HttpServletResponse response)
-	{
-		double avlBal;
-		
-		try {
-			System.out.println("Pid:" + getPhoneFromCookie(request, response).getPid());
-			avlBal = getAvailBal(getPhoneFromCookie(request, response)).getAvalbal();
-			System.out.println("avlBal is:" + avlBal);
-			
-
-		} catch (NullPointerException e) {
-			avlBal = 0.0;
-			System.out.println("avlBal is:" + avlBal);
-
-		}
-		return avlBal;
-
-	}
 	
-	public double getTicketCost(String from,String to,String nots)
+	public double getTicketCost(String nots)
 	{
-		int cost=0;
-		if (from.equals("Katraj") & to.equals("balaji Nagar") || from.equals("balaji Nagar") & to.equals("Katraj"))
-		{
-			cost=5;
-		}
-		else if (from.equals("Katraj") & to.equals("balaji Nagar") || from.equals("balaji Nagar") & to.equals("Katraj"))
-		{
-			cost=10;
-		}
-		else if (from.equals("balaji Nagar") & to.equals("Swarget") || from.equals("Swarget") & to.equals("balaji Nagar"))
-		{
-			cost=10;
-		}
-		else if (from.equals("Katraj") & to.equals("Swarget") || from.equals("Swarget") & to.equals("Katraj"))
-		{
-			cost=10;
-		}
-		else if (from.equals("Katraj") & to.equals("Shivaji Nagar") || from.equals("Shivaji Nagar") & to.equals("Katraj"))
-		{
-			cost=15;
-		}
-		else if (from.equals("Swarget") & to.equals("Shivaji Nagar") || from.equals("Shivaji Nagar") & to.equals("Swarget"))
-		{
-			cost=10;
-		}
-		else if (from.equals(to))
-		{
-			cost=0;
-			System.out.println("Please select from n to different location");
-		}
-		return cost*Double.parseDouble(nots);
+	
+		int fare=2;
+		return Double.parseDouble(nots)*fare;
 	}
 	@Override
 	public void saveRoute(AddLocation addloc) {
@@ -249,6 +219,31 @@ public class PassengerServiceImpl implements PassengerService {
 	public PassengerTrip findOneTrip(int id) {
 		// TODO Auto-generated method stub
 		return passengerTripRepository.findOne(id);
+	}
+	@Override
+	public void updateWallet(Wallet wallet) {
+		 walletRepository.save(wallet);
+		 //walletRepository.
+		
+	}
+	@Override
+	public Wallet findWalletByPassenger(Passenger passenger) {
+		// TODO Auto-generated method stub
+		return walletRepository.findByPassenger(passenger);
+	}
+	
+	@Override
+	public boolean isWalletExist(Passenger passenger ) {
+		System.out.println("Inside isWalletExist");
+		 try{
+			
+			 int avlBal=(int) findWalletByPassenger(passenger).getAvalbal();
+		 }
+		 catch(NullPointerException e){
+			 System.out.println("Exception in isWalletExist"+e.getMessage());
+			 return false;
+		 }
+		return true;
 	}
 
 

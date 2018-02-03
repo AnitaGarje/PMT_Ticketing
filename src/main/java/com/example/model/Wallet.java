@@ -18,15 +18,13 @@ public class Wallet {
 	@Column(name = "walletid")
 	private int walletid;
 	
-	@OneToOne (cascade = CascadeType.ALL)
+	@OneToOne
 	private Passenger passenger;
 	
 
 	@Column(name = "avalbal")
 	private double avalbal;
-	
-	@Column(name = "addamt")
-	private double addamt;
+
 
 	public int getWalletid() {
 		return walletid;
@@ -44,13 +42,7 @@ public class Wallet {
 		this.avalbal = avalbal;
 	}
 	
-	public double getAddamt() {
-		return addamt;
-	}
-
-	public void setAddamt(double addamt) {
-		this.addamt = addamt;
-	}
+	
 
 	public Passenger getPassenger() {
 		return passenger;
@@ -62,8 +54,8 @@ public class Wallet {
 	
 	@Override
 	public String toString() {
-		return "Wallet [walletid=" + walletid + ", passenger=" + passenger + ", avalbal=" + avalbal + ", addamt="
-				+ addamt + "]";
+		return "Wallet [walletid=" + walletid + ", passenger=" + passenger + ", avalbal=" + avalbal + 
+				"]";
 	}
 
 

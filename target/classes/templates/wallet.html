@@ -86,31 +86,43 @@
 								<div class="col-lg-6">
 									  <form autocomplete="off" action="#" th:action="@{/wallet}"  th:object="${wallet}" method="post" class="form-horizontal"  role="form">
 									  <div class="form-group">
-									  <div class="col-sm-9">
-                                       
-                                       <label for="disabledSelect">Current balance:</label>
-                                        <input class="form-control" type="text"  readonly  th:field="*{avalbal}"/>
-                                           </div>
+									  	<div class="col-sm-9">
+	                                       <label for="disabledSelect">Current balance:<span  th:utext="${walletAvlBal}"></span></label>
+                      					</div>
                                        </div>
 										<div class="form-group">
 											<div class="col-sm-9">
 												<label for="disabledSelect">Add 50/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/6BB6E29D0E9469F9F63CB8472E2B96B2'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/23.png' /></a></div> 
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/F4B38CEEF93D2724CCC15E467A53869C'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/22.png' /></a></div>  
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-sm-9">
 												<label for="disabledSelect">Add 100/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/176D2CEFF1134D59F7427C1A5B898AE1'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/23.png' /></a></div> 
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/36D35DA7EFF2DF088DB9797DBEB5B922'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/22.png' /></a></div>  
 											</div>
 										</div>
 										<div class="form-group">
 											<div class="col-sm-9">
 												<label for="disabledSelect">Add 500/- Rs To Wallet:</label>
-												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/05D82D0C001A802ED73F867B96B53CEF'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/13.png' /></a></div> 
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/A7F79C7A5C9C5B65432714D595F13A74'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/22.png' /></a></div> 
 											</div>
 										</div>
 										
+										<div class="form-group">
+											<div class="col-sm-9">
+												<label for="disabledSelect">Add Live 5/- Rs To Wallet:</label>
+												<div class='pm-button'><a href='https://www.payumoney.com/paybypayumoney/#/A4EC07167C95DF91923040085577E979'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/22.png' /></a></div> 
+											</div>
+										</div>
+										
+										
+										<div class="form-group">
+											<div class="col-sm-9">
+												<label for="disabledSelect">Add Test 50/- Rs To WalletUsing Rir:</label>
+												<div class='pm-button'><a href='https://www.payumoney.com/sandbox/paybypayumoney/#/DBECC487CB94B0517D91949B0F1BD751'><img src='https://www.payumoney.com/media/images/payby_payumoney/new_buttons/21.png' /></a></div> 
+											</div>
+										</div>
                         
                                    </form>		
 										 
