@@ -5,14 +5,18 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 import com.example.model.AddLocation;
+import com.example.model.FromLocation;
 import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerTrip;
+import com.example.model.ToLocation;
 import com.example.model.Wallet;
 
-@Repository("addLocationRepository")
-public  interface AddLocationRepository  extends JpaRepository <AddLocation, Long>{
+@Repository("tolocationRepository")
+public  interface ToLocationRepository  extends JpaRepository <ToLocation, Long>{
+	//List<Location> findAll();
 	
-	AddLocation findByFromlocAndToloc(String fromloc,String toloc);
+	
+	
 
 }

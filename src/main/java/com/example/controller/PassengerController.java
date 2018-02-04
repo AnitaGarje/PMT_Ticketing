@@ -1,10 +1,7 @@
 package com.example.controller;
 
 
-import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -12,28 +9,22 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.example.model.AddLocation;
 import com.example.model.Bus;
-
+import com.example.model.FromLocation;
 import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
-
-import com.example.model.User;
+import com.example.model.ToLocation;
 import com.example.model.Wallet;
-import com.example.model.WalletDebit;
 import com.example.service.PassengerService;
 
 
@@ -86,7 +77,7 @@ public class PassengerController {
 			 Wallet originalWallet=passengerService.findWalletByPassenger(passenger);
 			 wallet.setPassenger(originalWallet.getPassenger());
 			 wallet.setWalletid(originalWallet.getWalletid());
-			 setAvalbal=originalWallet.getAvalbal()+50;
+			 setAvalbal=originalWallet.getAvalbal()+10;
 			 wallet.setAvalbal(setAvalbal);
 			 passengerService.updateWallet(wallet);
 		 }
@@ -94,7 +85,7 @@ public class PassengerController {
 			 
 			 System.out.println("In TransactionSuccess ELSE block");
 			 wallet.setPassenger(passenger);
-			 setAvalbal=50;
+			 setAvalbal=10;
 			 wallet.setAvalbal(setAvalbal);
 			 passengerService.saveWallet(wallet);
 		 }
@@ -212,14 +203,50 @@ public class PassengerController {
 	}*/
 
 	
-	@RequestMapping(value = "/passengerTrip", method = RequestMethod.POST)
-	public String createNewpassengerTrip(@Valid PassengerTrip passengerTrip, HttpServletRequest request,HttpServletResponse response, BindingResult bindingResult) {
+	
+	  @RequestMapping(value = "/passengerTrip", method = RequestMethod.POST)
+	public ModelAndView createNewpassengerTrip(@Valid PassengerTrip passengerTrip, HttpServletRequest request,HttpServletResponse response, BindingResult bindingResult) {
 		System.out.println("In createNewpassengerTrip POST Method");
-		passengerTrip.setPassenger(passengerService.getPhoneFromCookie(request, response));
-		double tikcetCost=passengerService.getTicketCost(passengerTrip.getNots());
-		passengerTrip.setTktamt(tikcetCost);
-		passengerService.savePassengerTrip(passengerTrip);
-		return "redirect:/passengerPay";
+		Passenger passenger=passengerService.getPhoneFromCookie(request, response);
+		ModelAndView modelAndVieW=new ModelAndView();
+		double walletAvlBal=0;
+		modelAndVieW.setViewName("passengerTrip");
+		double tikcetCost=passengerService.getTicketCost(passengerTrip.getNots(),passengerTrip.getFromloc(),passengerTrip.getToloc());
+		try{
+			walletAvlBal=passengerService.findWalletByPassenger(passenger).getAvalbal();
+			
+		}
+		catch(NullPointerException e)
+		{
+			System.out.println("NullPointerException:"+e.getMessage());
+			walletAvlBal=0;
+		}
+		finally{
+			if(tikcetCost<0)
+			{
+				modelAndVieW.addObject("successMessage","Can't get distance, Please add route");
+			}
+			else if(tikcetCost==0)
+			{
+				modelAndVieW.addObject("successMessage","Can't get distance,From location and to location should not be same");
+			}
+			else
+			{
+				if(tikcetCost<=walletAvlBal )
+				{
+					passengerTrip.setPassenger(passenger);
+					passengerTrip.setTktamt(tikcetCost);
+					passengerService.savePassengerTrip(passengerTrip);
+					modelAndVieW.addObject("successMessage","Ticket booked successfully");
+				}
+				else
+				{
+		
+					modelAndVieW.addObject("successMessage","Not enough balance in wallet.Please add Money to wallet");
+				}
+			}
+		}
+		return modelAndVieW;
 	}
 
 	@RequestMapping(value = "/passengerPay", method = RequestMethod.GET)
@@ -240,7 +267,7 @@ public class PassengerController {
         return "redirect:/wallet";
     }
 
-	@RequestMapping(value="/successfulPayed",method=RequestMethod.GET)
+	/*@RequestMapping(value="/successfulPayed",method=RequestMethod.GET)
      public ModelAndView successfulPayed(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("In createsuccessfulPayed Method");
 		double avlBal=0;
@@ -269,7 +296,7 @@ public class PassengerController {
 		}
 
 		return modelAndView;
-	}
+	}*/
 
 	@RequestMapping(value = "/successfulPayed", params = "Done", method = RequestMethod.POST)
 	public String done() {
@@ -345,13 +372,13 @@ public class PassengerController {
 				modelAndView.setViewName("addLocation");
 			} else {
 				passengerService.saveRoute(addloc);
-				Location l1=new Location();
-				l1.setLoc(addloc.getFromloc());
-				passengerService.saveLocation(l1);
+				Location fl1=new Location();
+				fl1.setLoc(addloc.getFromloc());
+				passengerService.saveLocation(fl1);
 				
-				Location l2=new Location();
-				l2.setLoc(addloc.getToloc());
-				passengerService.saveLocation(l2);
+				Location tl2=new Location();
+				tl2.setLoc(addloc.getToloc());
+				passengerService.saveLocation(tl2);
 				modelAndView.addObject("successMessage", "Route added successfully");
 				modelAndView.addObject("addLocation", new AddLocation());
 				

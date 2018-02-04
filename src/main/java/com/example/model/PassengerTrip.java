@@ -51,7 +51,7 @@ public class PassengerTrip {
 	private Date dob = new Date();
 	
 	
-	@ManyToOne (cascade = CascadeType.ALL)
+	@ManyToOne
 	private Passenger passenger;
 	
 	public Passenger getPassenger() {

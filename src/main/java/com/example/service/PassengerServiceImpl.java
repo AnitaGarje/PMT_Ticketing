@@ -10,15 +10,19 @@ import org.springframework.stereotype.Service;
 
 import com.example.model.AddLocation;
 import com.example.model.Bus;
+import com.example.model.FromLocation;
 import com.example.model.Location;
 import com.example.model.Passenger;
 import com.example.model.PassengerTrip;
+import com.example.model.ToLocation;
 import com.example.model.Wallet;
 import com.example.repository.AddLocationRepository;
 import com.example.repository.BusRepository;
+import com.example.repository.FromLocationRepository;
 import com.example.repository.LocationRepository;
 import com.example.repository.PassengerRepository;
 import com.example.repository.PassengerTripRepository;
+import com.example.repository.ToLocationRepository;
 import com.example.repository.WalletRepository;
 
 
@@ -47,8 +51,15 @@ public class PassengerServiceImpl implements PassengerService {
 	private LocationRepository locationRepository;
 	
 	@Autowired
+	private FromLocationRepository fromlocationRepository;
+	
+	@Autowired
+	private ToLocationRepository tolocationRepository;
+	
+	@Autowired
 	private BusRepository busRepository;
 	
+
 	
 
 	Cookie newCookie;
@@ -179,11 +190,35 @@ public class PassengerServiceImpl implements PassengerService {
 	}
 	
 	
-	public double getTicketCost(String nots)
+	public double getTicketCost(String nots,String fromloc,String toloc)
 	{
 	
 		int fare=2;
-		return Double.parseDouble(nots)*fare;
+		int distance=0;
+		if(fromloc.equals(toloc))
+		{
+			distance=0;
+		}
+		else
+		{
+			try{
+				distance=Integer.parseInt(findAddLocationbyfromlocAndtoloc(fromloc,toloc).getDistance());
+			}
+			catch(Exception e)
+			{
+				System.out.println("Exception is:"+e.getMessage());
+				try{
+				distance=Integer.parseInt(findAddLocationbyfromlocAndtoloc(toloc,fromloc).getDistance());
+				}
+				catch(Exception e1)
+				{
+					System.out.println("Please add route to get distance");
+					distance=-1;
+				}
+			}
+		}
+		
+		return Double.parseDouble(nots)*fare*distance;
 	}
 	@Override
 	public void saveRoute(AddLocation addloc) {
@@ -245,6 +280,23 @@ public class PassengerServiceImpl implements PassengerService {
 		 }
 		return true;
 	}
+	@Override
+	public AddLocation findAddLocationbyfromlocAndtoloc(String fromloc,String toloc) {
+		// TODO Auto-generated method stub
+		return addLocationRepository.findByFromlocAndToloc(fromloc, toloc);
+	}
+	@Override
+	public void saveFromLocation(FromLocation fromloc) {
+		// TODO Auto-generated method stub
+		fromlocationRepository.save(fromloc);
+		
+	}
+	@Override
+	public void saveToLocation(ToLocation toloc) {
+		tolocationRepository.save(toloc);
+		
+	}
+	
 
 
 }
