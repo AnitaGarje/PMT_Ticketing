@@ -1,0 +1,67 @@
+
+		
+.pmtheadingcss{
+margin-bottom:0; 
+ background: linear-gradient(MidnightBlue,white);
+}
+.pmttickettitle{
+color:white;
+font-size:30px;
+}
+
+ul{
+  background-color: MidnightBlue;
+	
+}
+
+li a {
+    display: block;
+    color: #000;
+    padding: 8px 16px;
+    text-decoration: none;
+	color:white;
+}
+
+li a:hover:not(.active) {
+    background-color:white;
+	color:MidnightBlue;
+	
+}
+
+.active {
+   background-color:MidnightBlue;
+	color:white;
+    
+}
+.pmtheadcss{
+	background-image:black;
+	color:red;
+}
+.grad-top-bottom1{
+  
+   background:white
+}
+
+.bodycss{
+min-height: 351px;
+background-image:url(bus.jpg);
+background-repeat: no-repeat; 
+background-position: center;
+
+}
+.passenger{
+color:white;
+background-color:black
+}
+.passengerbelowline{
+border-style:hidden hidden double hidden;
+border-color:black;
+border-width:3px;
+}
+.mainbodyborder{
+border-style:solid;	
+border-color:black;	
+border-width:1px;
+}
+
+

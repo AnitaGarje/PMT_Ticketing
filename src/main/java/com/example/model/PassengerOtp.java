@@ -22,7 +22,6 @@ import org.springframework.data.annotation.Transient;
 
 @Entity
 @Table(name = "passengerotp")
-
 public class PassengerOtp {
 	
 	@Id
@@ -31,7 +30,7 @@ public class PassengerOtp {
 	private int otpid;
 	
     @Column(name = "otp")
-	@NotEmpty(message = "*Please enter recieved otp")
+    @NotEmpty(message = "*Please enter recieved otp")
 	private String otp;
 
 	public int getOtpid() {

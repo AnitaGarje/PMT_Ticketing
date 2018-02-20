@@ -15,6 +15,8 @@ import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.Pattern;
 
+import org.hibernate.validator.constraints.Length;
+import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -28,8 +30,9 @@ public class Passenger {
 	@Column(name = "pid")
 	private int pid;
 	
-    @Column(name = "phoneNo")
-	@Pattern(regexp="(^$|[0-9]{10})",message = "*Please provide a valid mobile no")
+    @Column(name = "phoneNo",unique = true)
+	@Length(min = 10,max=10, message = "*Your phone number must be 10 digit")
+	@NotEmpty(message = "*Phone number can't be empty")
     private String phoneNo;
 
 	/*@OneToMany
@@ -72,27 +75,7 @@ public class Passenger {
 		this.phoneNo = phoneNo;
 	}
 
-	@Override
-	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + pid;
-		return result;
-	}
 
-	@Override
-	public boolean equals(Object obj) {
-		if (this == obj)
-			return true;
-		if (obj == null)
-			return false;
-		if (getClass() != obj.getClass())
-			return false;
-		Passenger other = (Passenger) obj;
-		if (pid != other.pid)
-			return false;
-		return true;
-	}
 	
  
     

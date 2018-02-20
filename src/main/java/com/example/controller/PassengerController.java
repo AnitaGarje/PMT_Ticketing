@@ -24,6 +24,7 @@ import com.example.model.Passenger;
 import com.example.model.PassengerOtp;
 import com.example.model.PassengerTrip;
 import com.example.model.ToLocation;
+
 import com.example.model.Wallet;
 import com.example.service.PassengerService;
 
@@ -124,26 +125,40 @@ public class PassengerController {
 	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
 	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response,BindingResult bindingResult) {
 		ModelAndView modelAndView = new ModelAndView();
+		System.out.println("In passenger Post meth:" + passenger.getPhoneNo());
 		Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
 		if (passengerExists != null) {
-			bindingResult
-					.rejectValue("phoneNo", "error.passenger",
-							"There is already a user registered with the email provided");
-		}
-		System.out.println("In passenger Post meth:" + passenger.getPhoneNo());
-		if (bindingResult.hasErrors()) {
-			modelAndView.setViewName("passenger");
-		} else {
-			passengerService.savePassenger(passenger);
-			passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
-			modelAndView.addObject("successMessage", "login successfully");
-			modelAndView.addObject("passenger", new Passenger());
-			modelAndView.setViewName("passenger");
+			System.out.println("In Exist if");
+			passengerService.savePassenger(passengerExists);
+			modelAndView.addObject("PassengerOtp", new PassengerOtp());
+			modelAndView.setViewName("passengerOtp");
+			//return modelAndView;
+			return "redirect:/passengerOtp";
 			
 		}
-		return "redirect:/passengerOtp";
+		else if (bindingResult.hasErrors()) {
+			System.out.println("In Binding result if");
+			modelAndView.addObject("passenger", new Passenger());
+			modelAndView.setViewName("passenger");
+			//return modelAndView;
+			return "passenger";
+		} else {
+			System.out.println("In else if");
+			passengerService.savePassenger(passenger);
+			passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
+			//modelAndView.addObject("successMessage", "login successfully");
+			//modelAndView.addObject("passenger", new Passenger());
+			modelAndView.addObject("PassengerOtp", new PassengerOtp());
+			System.out.println("Before Setting the view");
+			modelAndView.setViewName("passengerOtp");
+			System.out.println("After Setting the view");
+			return "redirect:/passengerOtp";
+			
+		}
+		//return modelAndView;
 	}	
 	
+
 	@RequestMapping(value = "/passengerOtp", method = RequestMethod.GET)
 	public ModelAndView passengerOtp(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -185,6 +200,15 @@ public class PassengerController {
 	
 	@RequestMapping(value = "/passengerTrips", method = RequestMethod.GET)
 	public ModelAndView passengerTrips(HttpServletRequest request,HttpServletResponse response) {
+		ModelAndView modelAndView = new ModelAndView();
+		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
+		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
+		modelAndView.setViewName("passengerTrips");
+		return modelAndView;
+	}
+	
+	@RequestMapping(value = "/buses", method = RequestMethod.GET)
+	public ModelAndView getBuses(HttpServletRequest request,HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView();
 		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
 		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
