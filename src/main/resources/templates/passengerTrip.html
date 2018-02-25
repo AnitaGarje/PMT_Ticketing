@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -8,7 +9,6 @@
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta name="description" content="">
 	<meta name="author" content="">
-
 	<title>PMT-Ticketing</title>
 
 	<!-- Bootstrap Core CSS -->
@@ -25,6 +25,7 @@
 
 	<!-- Custom Fonts -->
 	<link href="../vendor/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+	<link href="../css/pmtcss.css" rel="stylesheet" type="text/css">
 
 	<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 	<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
@@ -32,36 +33,36 @@
 		<script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
 		<script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
 		<![endif]-->
+		
 
 	</head>
 
-	<body>
+    <body>
+    
+        <div id="wrapper">
 
-		<div id="wrapper">
-
-			  <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0">
+            <!-- Navigation -->
+            <nav class="navbar navbar-default navbar-static-top pmtheadingcss" role="navigation" >
                 <div class="navbar-header">
-                    <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-                        <span class="sr-only">Toggle navigation</span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                        <span class="icon-bar"></span>
-                    </button>
-                    <a class="navbar-brand" href="index.html">PMT-Ticketing</a>
+				<button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+                    <a class="navbar-brand" href="index.html"><b class="pmttickettitle">PMT-Ticketing</b></a>
                 </div>
                 <!-- /.navbar-header -->
-
-
                 <div class="navbar-default sidebar" role="navigation">
                     <div class="sidebar-nav navbar-collapse">
                         <ul class="nav" id="side-menu">
-                           <li>
+                            <li>
                                 <a href="/passenger"><i class="fa fa-user"></i> Login<span class="fa arrow"></a>
-                             </li>
+                            </li>
                             <li>
                                 <a href="/passengerTrip"><i class="fa fa-book"></i> Book Ticket<span class="fa arrow"></a>
-                             </li>
-                       		 <li>
+                            </li>
+                            <li>
                                 <a href="/wallet"><i class="fa fa-cc-visa"></i></i> Add Money<span class="fa arrow"></span></a>
                             </li>
                             <li>
@@ -70,7 +71,7 @@
                              <li>
                                 <a href="/addLocation"><i class="fa fa-arrows"></i></i> Add Route<span class="fa arrow"></span></a>
                             </li>
-                             <li>
+                            <li>
                                 <a href="/addBus"><i class="fa fa-bus"></i>  Add Bus<span class="fa arrow"></span></a>
                             </li>
                             <li>
@@ -83,20 +84,20 @@
                 <!-- /.navbar-static-side -->
             </nav>
 
-			<div id="page-wrapper">
-				<div class="row">
-					<div class="col-lg-12">
-						<h1 class="page-header">Passenger</h1>
-					</div>
-					<!-- /.col-lg-12 -->
-				</div>
-					 <!-- /.row -->
-			<div class="row">
-				<div class="col-lg-12">
-					<div class="panel panel-default">
-						<div class="panel-body">
-							<div class="row">
-								<div class="col-lg-6">
+         <div id="page-wrapper" class="bodycss">
+             <div class="row">
+                <div class="col-lg-12">
+                       <h1 class="page-header passengerbelowline"><span class="passenger">Book Ticket</span></h1>
+                </div>
+                    <!-- /.col-lg-12 -->
+              </div>
+                     <!-- /.row -->
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-default">
+                        <div class="panel-body mainbodyborder">
+                            <div class="row">
+                              <div class="col-lg-6">
 									<form  autocomplete="off" action="#" th:action="@{/passengerTrip}"
 					                        th:object="${passengerTrip}" method="post" class="form-horizontal" role="form">
 										<div class="form-group">

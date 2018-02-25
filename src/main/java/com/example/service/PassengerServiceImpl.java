@@ -147,7 +147,7 @@ public class PassengerServiceImpl implements PassengerService {
 	public String sendSMS(String PhoneNo) {
 		String OTP = "NOOTP";
 		try {
-		/* String host = "smtp.gmail.com"; 
+		 /*String host = "smtp.gmail.com"; 
 		  String user ="abusabu31@gmail.com"; 
 		  String pss = "abusabu@31"; 
 		  String to ="91"+PhoneNo+"@txtlocal.co.uk"; 

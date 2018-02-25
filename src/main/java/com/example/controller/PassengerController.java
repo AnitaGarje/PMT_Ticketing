@@ -51,18 +51,19 @@ public class PassengerController {
 	}
 	
 	
-	@RequestMapping(value = "/transactionSuccessRir", method = RequestMethod.GET)
+	/*@RequestMapping(value = "/transactionSuccessRir", method = RequestMethod.GET)
 	public String transactionSuccessRir() {
 		System.out.println("In transactionSuccessRir");;
 		return "redirect:/transactionSuccess/50";
 	}
-
+*/
 	/*@RequestMapping(value = "/transactionSuccess/50", method = RequestMethod.GET)
 	public ModelAndView TransactionSuccess() {
 		
 	}*/
-	@RequestMapping(value = "/transactionSuccess/50", method = RequestMethod.POST)
-	public ModelAndView PostTransactionSuccess(HttpServletRequest request, HttpServletResponse response) {
+	
+	@RequestMapping(value = "/transactionSuccess/10", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess10(HttpServletRequest request, HttpServletResponse response) {
 		System.out.println("In PostTransactionSuccess meth");
 	
 		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
@@ -93,34 +94,184 @@ public class PassengerController {
 		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
 		return modelAndView;
 	}
-	@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.GET)
-	public ModelAndView TransactionFailure() {
+
+	@RequestMapping(value = "/transactionFailure/10", method = RequestMethod.POST)
+	public ModelAndView PostTransactionFailure10() {
 		ModelAndView modelAndView = new ModelAndView("transactionFailure");
 		modelAndView.addObject("failureMessage","Transaction failed due to some reason .Please try again");
 		return modelAndView;
 	}
 	
-	@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.POST)
-	public ModelAndView PostTransactionFailure() {
-		ModelAndView modelAndView = new ModelAndView("transactionFailure");
-		
-		return modelAndView;
-	}
-	@RequestMapping(value = "/transactionCancel/50", method = RequestMethod.GET)
-	public ModelAndView TransactionCancel() {
+	@RequestMapping(value = "/transactionCancel/10", method = RequestMethod.POST)
+	public ModelAndView PostTransactionCancel10() {
 		ModelAndView modelAndView = new ModelAndView("transactionCancel");
 		modelAndView.addObject("cancelMessage","Transaction Cancelled due to some reason .Please try again");
 		return modelAndView;
 	}
 	
+	@RequestMapping(value = "/transactionSuccess/50", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("In PostTransactionSuccess meth");
+	
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		Wallet wallet=new Wallet();
+		 Passenger passenger=passengerService.getPhoneFromCookie(request, response);
+		System.out.println("passenger.getPhoneNo()): "+passenger.getPhoneNo());
+		
+		 double setAvalbal=0;
+		 
+		 if(passengerService.isWalletExist(passenger)==true)
+		 {	
+			 System.out.println("In TransactionSuccess IF condition");
+			 Wallet originalWallet=passengerService.findWalletByPassenger(passenger);
+			 wallet.setPassenger(originalWallet.getPassenger());
+			 wallet.setWalletid(originalWallet.getWalletid());
+			 setAvalbal=originalWallet.getAvalbal()+50;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.updateWallet(wallet);
+		 }
+		 else{
+			 
+			 System.out.println("In TransactionSuccess ELSE block");
+			 wallet.setPassenger(passenger);
+			 setAvalbal=50;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.saveWallet(wallet);
+		 }
+		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
+		return modelAndView;
+	}
+	/*@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.GET)
+	public ModelAndView TransactionFailure() {
+		ModelAndView modelAndView = new ModelAndView("transactionFailure");
+		modelAndView.addObject("failureMessage","Transaction failed due to some reason .Please try again");
+		return modelAndView;
+	}*/
+	
+	@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.POST)
+	public ModelAndView PostTransactionFailure() {
+		ModelAndView modelAndView = new ModelAndView("transactionFailure");
+		modelAndView.addObject("failureMessage","Transaction failed due to some reason .Please try again");
+		return modelAndView;
+	}
+	/*@RequestMapping(value = "/transactionCancel/50", method = RequestMethod.GET)
+	public ModelAndView TransactionCancel() {
+		ModelAndView modelAndView = new ModelAndView("transactionCancel");
+		modelAndView.addObject("cancelMessage","Transaction Cancelled due to some reason .Please try again");
+		return modelAndView;
+	}*/
+	
 	@RequestMapping(value = "/transactionCancel/50", method = RequestMethod.POST)
 	public ModelAndView PostTransactionCancel() {
 		ModelAndView modelAndView = new ModelAndView("transactionCancel");
-		//Passenger passenger = new Passenger();
-		//modelAndView.addObject("passenger", passenger);
+		modelAndView.addObject("cancelMessage","Transaction Cancelled due to some reason .Please try again");
 		return modelAndView;
 	}
 	
+	
+	@RequestMapping(value = "/transactionSuccess/100", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess100(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("In PostTransactionSuccess meth");
+	
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		Wallet wallet=new Wallet();
+		 Passenger passenger=passengerService.getPhoneFromCookie(request, response);
+		System.out.println("passenger.getPhoneNo()): "+passenger.getPhoneNo());
+		
+		 double setAvalbal=0;
+		 
+		 if(passengerService.isWalletExist(passenger)==true)
+		 {	
+			 System.out.println("In TransactionSuccess IF condition");
+			 Wallet originalWallet=passengerService.findWalletByPassenger(passenger);
+			 wallet.setPassenger(originalWallet.getPassenger());
+			 wallet.setWalletid(originalWallet.getWalletid());
+			 setAvalbal=originalWallet.getAvalbal()+100;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.updateWallet(wallet);
+		 }
+		 else{
+			 
+			 System.out.println("In TransactionSuccess ELSE block");
+			 wallet.setPassenger(passenger);
+			 setAvalbal=100;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.saveWallet(wallet);
+		 }
+		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
+		return modelAndView;
+	}
+
+
+	@RequestMapping(value = "/transactionSuccess/500", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess500(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("In PostTransactionSuccess meth");
+	
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		Wallet wallet=new Wallet();
+		 Passenger passenger=passengerService.getPhoneFromCookie(request, response);
+		System.out.println("passenger.getPhoneNo()): "+passenger.getPhoneNo());
+		
+		 double setAvalbal=0;
+		 
+		 if(passengerService.isWalletExist(passenger)==true)
+		 {	
+			 System.out.println("In TransactionSuccess IF condition");
+			 Wallet originalWallet=passengerService.findWalletByPassenger(passenger);
+			 wallet.setPassenger(originalWallet.getPassenger());
+			 wallet.setWalletid(originalWallet.getWalletid());
+			 setAvalbal=originalWallet.getAvalbal()+500;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.updateWallet(wallet);
+		 }
+		 else{
+			 
+			 System.out.println("In TransactionSuccess ELSE block");
+			 wallet.setPassenger(passenger);
+			 setAvalbal=500;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.saveWallet(wallet);
+		 }
+		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
+		return modelAndView;
+	}
+
+
+	
+	@RequestMapping(value = "/transactionSuccess/5", method = RequestMethod.POST)
+	public ModelAndView PostTransactionSuccess5(HttpServletRequest request, HttpServletResponse response) {
+		System.out.println("In PostTransactionSuccess meth");
+	
+		ModelAndView modelAndView = new ModelAndView("transactionSuccess");
+		Wallet wallet=new Wallet();
+		 Passenger passenger=passengerService.getPhoneFromCookie(request, response);
+		System.out.println("passenger.getPhoneNo()): "+passenger.getPhoneNo());
+		
+		 double setAvalbal=0;
+		 
+		 if(passengerService.isWalletExist(passenger)==true)
+		 {	
+			 System.out.println("In TransactionSuccess IF condition");
+			 Wallet originalWallet=passengerService.findWalletByPassenger(passenger);
+			 wallet.setPassenger(originalWallet.getPassenger());
+			 wallet.setWalletid(originalWallet.getWalletid());
+			 setAvalbal=originalWallet.getAvalbal()+5;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.updateWallet(wallet);
+		 }
+		 else{
+			 
+			 System.out.println("In TransactionSuccess ELSE block");
+			 wallet.setPassenger(passenger);
+			 setAvalbal=5;
+			 wallet.setAvalbal(setAvalbal);
+			 passengerService.saveWallet(wallet);
+		 }
+		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
+		return modelAndView;
+	}
+
+
 	
 	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
 	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response,BindingResult bindingResult) {
@@ -236,7 +387,9 @@ public class PassengerController {
 		double walletAvlBal=0;
 		modelAndVieW.setViewName("passengerTrip");
 		double tikcetCost=passengerService.getTicketCost(passengerTrip.getNots(),passengerTrip.getFromloc(),passengerTrip.getToloc());
+		Wallet wallet = null;
 		try{
+			 wallet=passengerService.findWalletByPassenger(passenger);
 			walletAvlBal=passengerService.findWalletByPassenger(passenger).getAvalbal();
 			
 		}
@@ -261,6 +414,8 @@ public class PassengerController {
 					passengerTrip.setPassenger(passenger);
 					passengerTrip.setTktamt(tikcetCost);
 					passengerService.savePassengerTrip(passengerTrip);
+					wallet.setAvalbal(walletAvlBal-tikcetCost);
+					passengerService.updateWallet(wallet);
 					modelAndVieW.addObject("successMessage","Ticket booked successfully");
 				}
 				else
