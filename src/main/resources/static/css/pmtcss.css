@@ -30,12 +30,12 @@ li a:hover:not(.active) {
 
 .active {
    background-color:MidnightBlue;
-	color:red;/*this is responsible for that red color*/
+	color:black;/*this is responsible for that red color*/
     
 }
 .pmtheadcss{
 	background-image:black;
-	color:red;
+	color:black;
 }
 .grad-top-bottom1{
   
