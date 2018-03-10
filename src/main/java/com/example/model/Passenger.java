@@ -33,6 +33,7 @@ public class Passenger {
     @Column(name = "phoneNo",unique = true)
 	@Length(min = 10,max=10, message = "*Your phone number must be 10 digit")
 	@NotEmpty(message = "*Phone number can't be empty")
+    @Pattern(regexp = "[0-9]+",message = "*Your phone number must numeric")
     private String phoneNo;
 
 	/*@OneToMany

@@ -31,6 +31,7 @@ public class PassengerOtp {
 	
     @Column(name = "otp")
     @NotEmpty(message = "*Please enter recieved otp")
+    @Length(min = 4,max=4, message = "*Your OTP number must be 4 digit")
 	private String otp;
 
 	public int getOtpid() {

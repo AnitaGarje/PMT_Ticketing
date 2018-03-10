@@ -159,7 +159,7 @@ public class PassengerServiceImpl implements PassengerService {
 		  String message = "Your OTP for Mobile Verification is : " + OTP;
 		  System.out.println("message :" + message + " PhoneNo is  :" + PhoneNo);
 		
-		 /*boolean sessionDebug = false; 
+		  /* boolean sessionDebug = false; 
 		  Properties pros =System.getProperties();
 		  pros.put("mail.smtp.starttls.enable", "tue");
 		  pros.put("mail.smtp.host", "host");

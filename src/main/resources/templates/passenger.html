@@ -98,26 +98,29 @@
                         <div class="panel-body mainbodyborder">
                             <div class="row">
                               <div class="col-lg-6">
-                                <form autocomplete="off" action="#" th:action="@{/passenger}"
-					                      th:object="${passenger}" method="post" class="form-horizontal" role="form">
-									<div class="form-group">
-										<div class="col-sm-9">
-										<label th:if="${#fields.hasErrors('phoneNo')}" th:errors="*{phoneNo}"
-												class="validation-message"></label>
-										<input type="text" th:field="*{phoneNo}" class="form-control"  placeholder="Enter the Phone Number"> 
-										</div>
-						
-									</div>
-					             	 <div class="form-group">
-											<div class="col-sm-9">
-												<button type="submit" class="btn btn-primary">Login</button>
-											</div>
-										</div>
-										
-										<span th:utext="${successMessage}"></span>
-							     </form>
-				           		</div>
-				
+                 <form autocomplete="off" action="#" th:action="@{/passenger}"
+					th:object="${passenger}" method="post" class="form-horizontal"
+					role="form">
+					<div class="form-group">
+						<div class="col-sm-9">
+						 <label th:if="${#fields.hasErrors('phoneNo')}" th:errors="*{phoneNo}"
+								class="validation-message"></label>
+						<input type="text" th:field="*{phoneNo}" placeholder="Enter the Phone Number"
+								class="form-control" /> 
+						</div>
+					</div>
+					
+					<div class="form-group">
+						<div class="col-sm-9">
+							<button type="submit" class="btn btn-primary">Login</button>
+						</div>
+					</div>
+					
+					<span th:utext="${successMessage}"></span>
+	</form>				
+                                    
+                                </div>
+                                <!-- /.col-lg-6 (nested) -->
                             </div>
                             <!-- /.row (nested) -->
                         </div>
@@ -128,10 +131,12 @@
                 <!-- /.col-lg-12 -->
             </div>
             <!-- /.row -->
-         </div>
+                 
+
+            </div>
             <!-- /#wrapper -->
 
-                     <!-- jQuery -->
+                    <!-- jQuery -->
                     <script src="../vendor/jquery/jquery.min.js"></script>
 
                     <!-- Bootstrap Core JavaScript -->
@@ -147,6 +152,7 @@
 
                     <!-- Custom Theme JavaScript -->
                     <script src="../dist/js/sb-admin-2.js"></script>
-					
-      </body>
-	</html>
+
+                </body>
+
+                </html>

@@ -44,6 +44,7 @@ public class PassengerController {
  
 	@RequestMapping(value = "/passenger", method = RequestMethod.GET)
 	public ModelAndView passenger() {
+		System.out.println("In passenger GET meth:");
 		ModelAndView modelAndView = new ModelAndView("passenger");
 		Passenger passenger = new Passenger();
 		modelAndView.addObject("passenger", passenger);
@@ -51,16 +52,46 @@ public class PassengerController {
 	}
 	
 	
-	/*@RequestMapping(value = "/transactionSuccessRir", method = RequestMethod.GET)
-	public String transactionSuccessRir() {
-		System.out.println("In transactionSuccessRir");;
-		return "redirect:/transactionSuccess/50";
-	}
-*/
-	/*@RequestMapping(value = "/transactionSuccess/50", method = RequestMethod.GET)
-	public ModelAndView TransactionSuccess() {
+	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
+	public String createNewpassenger(@Valid Passenger passenger,BindingResult bindingResult, HttpServletRequest request,HttpServletResponse response) {
+		//ModelAndView modelAndView = new ModelAndView();
+		System.out.println("In passenger Post meth:");
 		
-	}*/
+		 if (bindingResult.hasErrors()) {
+			System.out.println("In Binding result if");
+			//modelAndView.addObject("passenger", new Passenger());
+			//modelAndView.setViewName("passenger");
+			//return modelAndView;
+			return "passenger";
+		}
+		else{
+			
+			Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
+			if (passengerExists != null) {
+				System.out.println("In Exist if");
+				passengerService.savePassenger(passengerExists);
+				//modelAndView.addObject("PassengerOtp", new PassengerOtp());
+				//modelAndView.setViewName("passengerOtp");
+				//return modelAndView;
+				//return "redirect:/passengerOtp";
+				
+			}
+			else {
+			System.out.println("In else if");
+			passengerService.savePassenger(passenger);
+			passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
+			//modelAndView.addObject("successMessage", "login successfully");
+			//modelAndView.addObject("passenger", new Passenger());
+		    //modelAndView.addObject("PassengerOtp", new PassengerOtp());
+			//System.out.println("Before Setting the view");
+		    //modelAndView.setViewName("passengerOtp");
+			//System.out.println("After Setting the view");
+			//return "redirect:/passengerOtp";
+			}
+		}
+		return "redirect:/passengerOtp";
+	}	
+	
 	
 	@RequestMapping(value = "/transactionSuccess/10", method = RequestMethod.POST)
 	public ModelAndView PostTransactionSuccess10(HttpServletRequest request, HttpServletResponse response) {
@@ -141,25 +172,14 @@ public class PassengerController {
 		 modelAndView.addObject("successMessage","Money added successfully,available balance is: " +setAvalbal);
 		return modelAndView;
 	}
-	/*@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.GET)
-	public ModelAndView TransactionFailure() {
-		ModelAndView modelAndView = new ModelAndView("transactionFailure");
-		modelAndView.addObject("failureMessage","Transaction failed due to some reason .Please try again");
-		return modelAndView;
-	}*/
-	
+
 	@RequestMapping(value = "/transactionFailure/50", method = RequestMethod.POST)
 	public ModelAndView PostTransactionFailure() {
 		ModelAndView modelAndView = new ModelAndView("transactionFailure");
 		modelAndView.addObject("failureMessage","Transaction failed due to some reason .Please try again");
 		return modelAndView;
 	}
-	/*@RequestMapping(value = "/transactionCancel/50", method = RequestMethod.GET)
-	public ModelAndView TransactionCancel() {
-		ModelAndView modelAndView = new ModelAndView("transactionCancel");
-		modelAndView.addObject("cancelMessage","Transaction Cancelled due to some reason .Please try again");
-		return modelAndView;
-	}*/
+	
 	
 	@RequestMapping(value = "/transactionCancel/50", method = RequestMethod.POST)
 	public ModelAndView PostTransactionCancel() {
@@ -272,44 +292,6 @@ public class PassengerController {
 	}
 
 
-	
-	@RequestMapping(value = "/passenger", method = RequestMethod.POST)
-	public String createNewpassenger(@Valid Passenger passenger, HttpServletRequest request,HttpServletResponse response,BindingResult bindingResult) {
-		ModelAndView modelAndView = new ModelAndView();
-		System.out.println("In passenger Post meth:" + passenger.getPhoneNo());
-		Passenger passengerExists = passengerService.findPassengerByPhone(passenger.getPhoneNo());
-		if (passengerExists != null) {
-			System.out.println("In Exist if");
-			passengerService.savePassenger(passengerExists);
-			modelAndView.addObject("PassengerOtp", new PassengerOtp());
-			modelAndView.setViewName("passengerOtp");
-			//return modelAndView;
-			return "redirect:/passengerOtp";
-			
-		}
-		else if (bindingResult.hasErrors()) {
-			System.out.println("In Binding result if");
-			modelAndView.addObject("passenger", new Passenger());
-			modelAndView.setViewName("passenger");
-			//return modelAndView;
-			return "passenger";
-		} else {
-			System.out.println("In else if");
-			passengerService.savePassenger(passenger);
-			passengerService.setPhoneToCookie(request, response, passenger.getPhoneNo());
-			//modelAndView.addObject("successMessage", "login successfully");
-			//modelAndView.addObject("passenger", new Passenger());
-			modelAndView.addObject("PassengerOtp", new PassengerOtp());
-			System.out.println("Before Setting the view");
-			modelAndView.setViewName("passengerOtp");
-			System.out.println("After Setting the view");
-			return "redirect:/passengerOtp";
-			
-		}
-		//return modelAndView;
-	}	
-	
-
 	@RequestMapping(value = "/passengerOtp", method = RequestMethod.GET)
 	public ModelAndView passengerOtp(HttpServletRequest request, HttpServletResponse response) {
 		ModelAndView modelAndView = new ModelAndView();
@@ -366,17 +348,6 @@ public class PassengerController {
 		modelAndView.setViewName("passengerTrips");
 		return modelAndView;
 	}
-	
-	
-	/*@RequestMapping(value = "/getBusDetails", method = RequestMethod.POST)
-	public @ResponseBody getBusDetails(@RequestParam String fromloc,@RequestParam String toloc,@RequestParam String mode) {
-		ModelAndView modelAndView = new ModelAndView();
-		List<PassengerTrip> TripsByPassenger = passengerService.findPassengerTripByPassenger();
-		modelAndView.addObject("TripsByPassenger", TripsByPassenger);
-		modelAndView.setViewName("passengerTrips");
-		return "asdas";
-	}*/
-
 	
 	
 	  @RequestMapping(value = "/passengerTrip", method = RequestMethod.POST)
@@ -446,46 +417,11 @@ public class PassengerController {
         return "redirect:/wallet";
     }
 
-	/*@RequestMapping(value="/successfulPayed",method=RequestMethod.GET)
-     public ModelAndView successfulPayed(HttpServletRequest request, HttpServletResponse response) {
-		System.out.println("In createsuccessfulPayed Method");
-		double avlBal=0;
-		double tktamt;
-		ModelAndView modelAndView = new ModelAndView();
-
-		try {
-			System.out.println("Pid:" + passengerService.getPhoneFromCookie(request, response).getPid());
-			tktamt = passengerService.getTicketAmt(passengerService.getPhoneFromCookie(request, response)).getTktamt();
-			//avlBal = passengerService.getAvailBal(passengerService.getPhoneFromCookie(request, response)).getAvalbal();
-			avlBal = avlBal - tktamt;
-			System.out.println("avlBal is:" + avlBal);
-			modelAndView.addObject("availbal", avlBal);
-			modelAndView.setViewName("successfulPayed");
-			System.out.println("After setting availbal");
-
-		} catch (NullPointerException e) {
-			avlBal = 0.0;
-			tktamt = 0.0;
-			avlBal = avlBal - tktamt;
-			System.out.println("avlBal is:" + avlBal);
-			modelAndView.addObject("availbal", avlBal);
-			modelAndView.setViewName("successfulPayed");
-			System.out.println("After setting availbal");
-
-		}
-
-		return modelAndView;
-	}*/
-
 	@RequestMapping(value = "/successfulPayed", params = "Done", method = RequestMethod.POST)
 	public String done() {
 		return "redirect:/passenger";
 	}
 
-	
-	
-	
-	
 	@RequestMapping(value = "/wallet", method = RequestMethod.GET)
 	public ModelAndView wallet(HttpServletRequest request, HttpServletResponse response) {
 		
